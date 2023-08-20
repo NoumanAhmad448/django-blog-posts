@@ -1,5 +1,5 @@
 # Blog Posts Project
-### A blog creator app for practicing django skills
+### An app that can create blogs. The main purpose to create this app to practice django skills and make the source code available online for other developers to start this repo for their own custom need
 Using this app, you can
 1. create an admin panel for creating users
 

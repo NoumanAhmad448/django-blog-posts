@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+
+      <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
+      <div class="card">
+        <div class="card-header">
+          <div class="text-center"> Update Password</div>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/update-password">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="text-danger list-unstyled">
+                  <div>{{ field.errors }}</div>
+              </div>
+            {% endfor %}
+            <div class="form-group">
+              <label for="password">New Password</label>
+              <input  type="password" class="form-control" id="password" name="password" aria-describedby="Enter new password"
+               placeholder="Enter New Password">
+            </div>
+            <div class="form-group">
+              <label for="password">Confirm Password</label>
+              <input type="password" class="form-control" name="c_password" id="c_password" placeholder="Confirm Password">
+            </div>
+            <button type="submit" class="btn btn-primary"> Update Password </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock  %}
