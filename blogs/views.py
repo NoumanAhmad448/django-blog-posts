@@ -24,6 +24,3 @@ def create_post(request):
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         pass
 
-def current_posts(request):
-    context = {"test": "test2"}
-    return render(request, "blogs/index.html", context)
