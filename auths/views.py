@@ -1,5 +1,3 @@
-
-from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render,redirect
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions
@@ -11,6 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms.update_pass import UpdatePassForm
+from django.utils import translation as tran
+from django.conf import settings
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -25,7 +25,7 @@ def register_user(request):
         if form.is_valid():
             # duplicate email validation
             if User.objects.filter(email=form.cleaned_data["email"]).exists():
-                form.add_error("email","Duplicate email has found")
+                form.add_error("email",tran.gettext("Duplicate email has found"))
                 return render(request, Words.reg_url, {"form": form})
 
             user = User.objects.create_user(form.cleaned_data["email"], form.cleaned_data["email"], form.cleaned_data["password"])
@@ -58,7 +58,7 @@ def login_user(request):
                     login(request, user)
                     return redirect("/",permanent=True)
                 else:
-                   form.add_error("email", "Either email or password is wrong")
+                   form.add_error("email", tran.gettext("Either email or password is wrong"))
                    return render(request, Words.login_url, {"form": form})
             else:
                 return render(request, Words.login_url, {"form": form})
@@ -88,7 +88,7 @@ def forgot_password(request):
                 else:
                     return render(request, Words.update_pass_url, {"form": form})
             else:
-                form.add_error("password", "Both passwords are not same")
+                form.add_error("password", tran.gettext("Both passwords are not same"))
                 return render(request, Words.update_pass_url, {"form": form})
         else:
             return render(request, Words.update_pass_url, {"form": form})
