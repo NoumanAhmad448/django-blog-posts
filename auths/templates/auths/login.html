@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block body %}
       <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
       <div class="card">
         <div class="card-header">
-          <div class="text-center"> Login Form</div>
+          <div class="text-center"> {% translate "Login Form" %}</div>
         </div>
         <div class="card-body">
           <form method="post" action="/login">
@@ -13,14 +14,15 @@
               </div>
             {% endfor %}
             <div class="form-group">
-              <label for="email">Email address</label>
-              <input  type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
+              <label for="email">{% translate "Email address" %}</label>
+              <input  type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                placeholder="{% translate 'Enter Email' %}">
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+              <label for="password">{% translate 'Password' %}</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="{% translate 'Password' %}">
             </div>
-            <button type="submit" class="btn btn-primary"> Let me In</button>
+            <button type="submit" class="btn btn-primary"> {% translate "Let me In" %}</button>
           </form>
         </div>
       </div>
