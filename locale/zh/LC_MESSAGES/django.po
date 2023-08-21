@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-21 18:06+0800\n"
+"POT-Creation-Date: 2023-08-21 22:33+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +21,7 @@ msgid "Login Form"
 msgstr "登录"
 
 #: .\auths\templates\auths\login.html:17
+#: .\auths\templates\auths\register.html:19
 msgid "Email address"
 msgstr "邮件"
 
@@ -30,27 +30,54 @@ msgid "Enter Email"
 msgstr "邮件"
 
 #: .\auths\templates\auths\login.html:22 .\auths\templates\auths\login.html:23
+#: .\auths\templates\auths\register.html:34
+#: .\auths\templates\auths\register.html:35
 msgid "Password"
 msgstr "密码"
 
 #: .\auths\templates\auths\login.html:25
+#: .\auths\templates\auths\register.html:41
 msgid "Let me In"
 msgstr "登录"
 
+#: .\auths\templates\auths\register.html:8
+msgid "Registeration Form"
+msgstr "注册"
+
 #: .\auths\templates\auths\update_pass_url.html:8
-#, fuzzy
-#| msgid "Password"
+#: .\auths\templates\auths\update_pass_url.html:27
 msgid "Update Password"
 msgstr "修改密码"
 
 #: .\auths\templates\auths\update_pass_url.html:19
-#, fuzzy
-#| msgid "Password"
 msgid "New Password"
 msgstr "新密码"
 
 #: .\auths\templates\auths\update_pass_url.html:21
-#, fuzzy
-#| msgid "Password"
 msgid "Enter New Password"
 msgstr "打字新的密码"
+
+#: .\auths\templates\auths\update_pass_url.html:24
+#: .\auths\templates\auths\update_pass_url.html:25
+msgid "Confirm Password"
+msgstr "确定密码"
+
+#: .\auths\views.py:28
+msgid "Duplicate email has found"
+msgstr "这个网站已经有这个邮件"
+
+#: .\auths\views.py:61
+msgid "Either email or password is wrong"
+msgstr "邮件还是密码不对"
+
+#: .\auths\views.py:91
+msgid "Both passwords are not same"
+msgstr "密码都不一样"
+
+#: .\blog_posts\settings.py:153
+msgid "English"
+msgstr "英语"
+
+#: .\blog_posts\settings.py:154
+msgid "Chinese"
+msgstr "中文"

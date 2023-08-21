@@ -1,7 +1,10 @@
 # Blog Posts Project
 ### An app that can create blogs. The main purpose to create this app to practice django skills and make the source code available online for other developers to start this repo for their own custom need
 Using this app, you can
-1. create an admin panel for creating users
+1. create an account, update the user password, login to the website
+2. fetch the user detail using API
+3. create a token for API validation
+4. localization has been implementated for english and chinese languages. You can pass a get params lang=en|zh
 
 ## Setup (Recommended)
 1. install anaconda
@@ -14,5 +17,16 @@ Using this app, you can
 7. run migrations using ```python manage.py migrate```
 
 
+## locationlization rules
+1. install gettext. follow django documentation or Google it
+2. following commands can be handy while creating locationlization
+    1. django-admin makemessages --locale=zh --extension=html,txt,py
+    2. django-admin compilemessages
+
 ## Information
 1. super user credentials: username: test_user  password:Silver009@t
+
+## Technical Knowledge
+1. custom middleware has been created for language translation ```middlewares.LanguageTransMiddleware```
+2. django session and token validation has been implemented
+3. front end has been developed using Jquery & Bootstrap
