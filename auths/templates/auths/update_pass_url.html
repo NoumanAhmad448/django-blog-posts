@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 {% block body %}
 
     {% if password_history %}
@@ -20,18 +21,29 @@
             {% endfor %}
             <div class="form-group">
               <label for="password">{% translate 'New Password' %}</label>
-              <input  type="password" class="form-control" id="password" name="password"
-                aria-describedby="{% translate 'Enter new password' %}"
-               placeholder="{% translate 'Enter New Password' %}">
+              <div class="password-container">
+                <input  type="password" class="form-control" id="password" name="password"
+                    aria-describedby="{% translate 'Enter new password' %}"
+                placeholder="{% translate 'Enter New Password' %}">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                </div>
             </div>
             <div class="form-group">
               <label for="password">{% translate 'Confirm Password' %}</label>
-              <input type="password" class="form-control" name="c_password" id="c_password" placeholder="{% translate 'Confirm Password' %}">
+              <div class="password-container">
+                <input type="password" class="form-control" name="c_password" id="c_password" placeholder="{% translate 'Confirm Password' %}">
+                <i class="bi bi-eye-slash" id="togglePassword01"></i>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary"> {% translate 'Update Password' %} </button>
           </form>
         </div>
       </div>
     </div>
-
 {% endblock  %}
+
+{% block script %}
+    <script src="{% static 'js/update_pass_url.js' %}">
+    </script>
+{% endblock  %}
+

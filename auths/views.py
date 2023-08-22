@@ -74,8 +74,9 @@ def logout_user(request):
 def forgot_password(request):
     if request.method == 'GET':
         user = request.user
-        password_history = PasswordHistory.objects.filter(user_id=user.id).order_by("-created_at")[:1]
-        return render(request, Words.update_pass_url, {"password_history": password_history[0]})
+        password_history = PasswordHistory.objects.filter(user_id=user.id).order_by("-created_at")
+        password_history = password_history[0] if password_history and password_history.exists() else None
+        return render(request, Words.update_pass_url, {"password_history": password_history})
 
     elif request.method == 'POST':
         form = UpdatePassForm(request.POST)

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-00@vnn_mc=xdwf2b=-rsv7p74a6$etdl(yixwawtd6ncngeom5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog_posts.context_processors.global_setting',
             ],
         },
     },
@@ -155,6 +156,11 @@ LANGUAGES =[ ('en', _('English')),
     ('zh', _('Chinese'))]
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__name__))
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+STATICFILES_DIRS =  [ os.path.join(BASE_DIR,'static')]
+
 LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )
 
 DATE_FORMAT="d F Y"
