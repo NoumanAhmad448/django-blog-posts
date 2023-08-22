@@ -5,7 +5,7 @@
       <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
       <div class="card">
         <div class="card-header">
-          <div class="text-center"> {% translate 'Registeration Form' %}</div>
+          <div class="text-center"> {% translate "Registeration Form" %}</div>
         </div>
         <div class="card-body">
           <form method="post" action="{% url 'register_user' %}">
@@ -17,28 +17,33 @@
             {% endfor %}
             <div class="form-group">
               <label for="email">{% translate 'Email address' %}</label>
-              <input  type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email"
+              <input  type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+               placeholder="{% translate 'Enter Email' %}"
               value="">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <small id="emailHelp" class="form-text text-muted">{% translate "We'll never share your email with anyone else"%}</small>
             </div>
             <div class="form-group">
-              <label for="first_name">First Name</label>
-              <input  type="text" class="form-control" id="first_name" name="first_name" aria-describedby="first name Help"
-              placeholder="Enter First Name">
+              <label for="first_name">{% translate "First Name" %}</label>
+              <input  type="text" class="form-control" id="first_name" name="first_name" aria-describedby="{% translate 'first name' %}"
+              placeholder="{% translate 'Enter First Name' %}">
             </div>
             <div class="form-group">
-              <label for="last_name">Last Name</label>
-              <input  type="text" class="form-control" id="last_name" name="last_name" aria-describedby="last name" placeholder="Enter Last Name">
+              <label for="last_name">{% translate "Last Name" %}</label>
+              <input  type="text" class="form-control" id="last_name" name="last_name" aria-describedby="last name"
+              placeholder="{% translate 'Enter Last Name' %}">
             </div>
             <div class="form-group">
               <label for="password">{% translate 'Password' %}</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="{% translate 'Password' %}">
+              <div class="password-container">
+                <input type="password" class="form-control" name="password" id="password" placeholder="{% translate 'Password' %}">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+              </div>
             </div>
             <div class="form-group form-check">
               <input  type="checkbox" class="form-check-input" id="terms" name="terms">
-              <label class="form-check-label" for="terms">Check me out</label>
+              <label class="form-check-label" for="terms">{% translate 'Check me out' %}</label>
             </div>
-            <button type="submit" class="btn btn-primary"> {% translate 'Let me In' %}</button>
+            <button type="submit" class="btn btn-primary"> {% translate 'Register my in' %}</button>
           </form>
         </div>
       </div>

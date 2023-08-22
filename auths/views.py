@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from .forms.update_pass import UpdatePassForm
 from django.utils import translation as tran
 from django.conf import settings
+from .models import PasswordHistory
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -72,7 +73,10 @@ def logout_user(request):
 @login_required
 def forgot_password(request):
     if request.method == 'GET':
-        return render(request, Words.update_pass_url)
+        user = request.user
+        password_history = PasswordHistory.objects.filter(user_id=user.id).order_by("-created_at")
+        password_history = password_history[0] if password_history and password_history.exists() else None
+        return render(request, Words.update_pass_url, {"password_history": password_history})
 
     elif request.method == 'POST':
         form = UpdatePassForm(request.POST)
@@ -84,6 +88,7 @@ def forgot_password(request):
                 if user is not None:
                     user.set_password(new_password)
                     user.save()
+                    PasswordHistory.objects.create(user_id=user.id)
                     return redirect("/",permanent=True)
                 else:
                     return render(request, Words.update_pass_url, {"form": form})

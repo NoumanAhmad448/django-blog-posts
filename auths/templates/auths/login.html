@@ -20,7 +20,10 @@
             </div>
             <div class="form-group">
               <label for="password">{% translate 'Password' %}</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="{% translate 'Password' %}">
+              <div class="password-container">
+                <input type="password" class="form-control" name="password" id="password" placeholder="{% translate 'Password' %}">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary"> {% translate "Let me In" %}</button>
           </form>
