@@ -122,7 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'zh'
+# changing the language_code value required a value to be changed in LanguageTransMiddleware
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -155,3 +156,5 @@ LANGUAGES =[ ('en', _('English')),
 
 SITE_ROOT = os.path.dirname(os.path.realpath(__name__))
 LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )
+
+DATE_FORMAT="d F Y"

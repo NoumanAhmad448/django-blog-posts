@@ -2,6 +2,9 @@
 {% load i18n %}
 {% block body %}
 
+    {% if password_history %}
+        <div class="text-danger ml-5 mt-5"> Last Changed Password : {{ password_history.created_at|date:"d F Y" }}</div>
+    {% endif %}
       <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
       <div class="card">
         <div class="card-header">
@@ -17,7 +20,8 @@
             {% endfor %}
             <div class="form-group">
               <label for="password">{% translate 'New Password' %}</label>
-              <input  type="password" class="form-control" id="password" name="password" aria-describedby="Enter new password"
+              <input  type="password" class="form-control" id="password" name="password"
+                aria-describedby="{% translate 'Enter new password' %}"
                placeholder="{% translate 'Enter New Password' %}">
             </div>
             <div class="form-group">

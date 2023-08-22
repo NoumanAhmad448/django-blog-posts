@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-21 22:33+0800\n"
+"POT-Creation-Date: 2023-08-22 10:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,49 +16,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\auths\templates\auths\login.html:7
+#: .\auths\templates\auths\login.html:6
 msgid "Login Form"
 msgstr "登录"
 
-#: .\auths\templates\auths\login.html:17
-#: .\auths\templates\auths\register.html:19
+#: .\auths\templates\auths\login.html:16
+#: .\auths\templates\auths\register.html:18
 msgid "Email address"
 msgstr "邮件"
 
-#: .\auths\templates\auths\login.html:19
+#: .\auths\templates\auths\login.html:18
+#: .\auths\templates\auths\register.html:20
 msgid "Enter Email"
 msgstr "邮件"
 
-#: .\auths\templates\auths\login.html:22 .\auths\templates\auths\login.html:23
-#: .\auths\templates\auths\register.html:34
+#: .\auths\templates\auths\login.html:21 .\auths\templates\auths\login.html:22
 #: .\auths\templates\auths\register.html:35
+#: .\auths\templates\auths\register.html:36
 msgid "Password"
 msgstr "密码"
 
-#: .\auths\templates\auths\login.html:25
-#: .\auths\templates\auths\register.html:41
+#: .\auths\templates\auths\login.html:24
 msgid "Let me In"
 msgstr "登录"
 
-#: .\auths\templates\auths\register.html:8
+#: .\auths\templates\auths\register.html:7
 msgid "Registeration Form"
 msgstr "注册"
 
-#: .\auths\templates\auths\update_pass_url.html:8
-#: .\auths\templates\auths\update_pass_url.html:27
+#: .\auths\templates\auths\register.html:22
+msgid "We'll never share your email with anyone else"
+msgstr "我们不转发你的邮件"
+
+#: .\auths\templates\auths\register.html:25
+msgid "First Name"
+msgstr "你的名字"
+
+#: .\auths\templates\auths\register.html:26
+msgid "first name"
+msgstr "你的名字"
+
+#: .\auths\templates\auths\register.html:27
+msgid "Enter First Name"
+msgstr "名字"
+
+#: .\auths\templates\auths\register.html:30
+msgid "Last Name"
+msgstr "性名"
+
+#: .\auths\templates\auths\register.html:32
+msgid "Enter Last Name"
+msgstr "性名"
+
+#: .\auths\templates\auths\register.html:40
+msgid "Check me out"
+msgstr "同意"
+
+#: .\auths\templates\auths\register.html:42
+msgid "Register my in"
+msgstr "注册"
+
+#: .\auths\templates\auths\update_pass_url.html:7
+#: .\auths\templates\auths\update_pass_url.html:26 .\templates\base.html:26
 msgid "Update Password"
 msgstr "修改密码"
 
-#: .\auths\templates\auths\update_pass_url.html:19
+#: .\auths\templates\auths\update_pass_url.html:18
 msgid "New Password"
 msgstr "新密码"
 
-#: .\auths\templates\auths\update_pass_url.html:21
+#: .\auths\templates\auths\update_pass_url.html:20
 msgid "Enter New Password"
 msgstr "打字新的密码"
 
+#: .\auths\templates\auths\update_pass_url.html:23
 #: .\auths\templates\auths\update_pass_url.html:24
-#: .\auths\templates\auths\update_pass_url.html:25
 msgid "Confirm Password"
 msgstr "确定密码"
 
@@ -81,3 +113,15 @@ msgstr "英语"
 #: .\blog_posts\settings.py:154
 msgid "Chinese"
 msgstr "中文"
+
+#: .\templates\base.html:7
+msgid "Template"
+msgstr "表达"
+
+#: .\templates\base.html:20
+msgid "Logout"
+msgstr "注销"
+
+#: .\templates\base.html:31
+msgid "Register"
+msgstr "注册"
