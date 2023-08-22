@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import include, path
-from django.urls import re_path
+from django.utils.translation import gettext_lazy as _
 
+admin.site.site_header = _('Blog Post Writer')
+admin.site.site_title = _('blog post writer')
 
 urlpatterns = [
     path("", include('auths.urls')),
