@@ -1,0 +1,1 @@
+from .pass_his_admin import PasswordHistoryAdmin

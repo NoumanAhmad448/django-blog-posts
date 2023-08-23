@@ -1,0 +1,1 @@
+from .create_post_model import CreatePostModel

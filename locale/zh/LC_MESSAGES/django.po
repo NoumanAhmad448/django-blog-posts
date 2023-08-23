@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-22 10:34+0800\n"
+"POT-Creation-Date: 2023-08-23 21:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,112 +16,232 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\auths\templates\auths\login.html:6
+#: .\api_v1\forms\create_post.py:7
+msgid "source is required"
+msgstr "source是需要"
+
+#: .\api_v1\forms\create_post.py:8
+msgid "post title is required"
+msgstr "title是需要"
+
+#: .\api_v1\forms\create_post.py:9
+msgid "post tags is required"
+msgstr ""
+
+#: .\api_v1\forms\create_post.py:10
+msgid "post description is required"
+msgstr ""
+
+#: .\api_v1\forms\create_post.py:11
+msgid "post description must be under 10,000 characters"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:7
+msgid "API"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:8
+msgid "web"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:10
+msgid "Post Source"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:11
+msgid "Post Title"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:12
+msgid "Post Tags"
+msgstr ""
+
+#: .\api_v1\models\create_post_model.py:17
+#, fuzzy
+#| msgid "Update Password"
+msgid "User Post"
+msgstr "修改密码"
+
+#: .\api_v1\models\create_post_model.py:18
+msgid "User Posts"
+msgstr ""
+
+#: .\api_v1\views.py:65
+msgid "email field is required"
+msgstr ""
+
+#: .\api_v1\views.py:76
+msgid "no such header is found"
+msgstr ""
+
+#: .\api_v1\views.py:80
+msgid "user is not authorized"
+msgstr ""
+
+#: .\auths\admin\pass_his_admin.py:10
+msgid "Days Filter"
+msgstr ""
+
+#: .\auths\admin\pass_his_admin.py:17
+msgid "15 days"
+msgstr ""
+
+#: .\auths\admin\pass_his_admin.py:18
+msgid "20 days"
+msgstr ""
+
+#: .\auths\admin\pass_his_admin.py:37
+msgid "User ID"
+msgstr ""
+
+#: .\auths\models\password_history.py:7
+msgid "User Key"
+msgstr ""
+
+#: .\auths\models\password_history.py:8
+msgid "Requested Date"
+msgstr ""
+
+#: .\auths\models\password_history.py:18
+#, fuzzy
+#| msgid "Update Password"
+msgid "User Password History"
+msgstr "修改密码"
+
+#: .\auths\models\password_history.py:19
+msgid "User Password Histories"
+msgstr ""
+
+#: .\auths\templates\auths\login.html:7
 msgid "Login Form"
 msgstr "登录"
 
-#: .\auths\templates\auths\login.html:16
-#: .\auths\templates\auths\register.html:18
+#: .\auths\templates\auths\login.html:17
+#: .\auths\templates\auths\register.html:19
 msgid "Email address"
 msgstr "邮件"
 
-#: .\auths\templates\auths\login.html:18
-#: .\auths\templates\auths\register.html:20
+#: .\auths\templates\auths\login.html:19
+#: .\auths\templates\auths\register.html:21
 msgid "Enter Email"
 msgstr "邮件"
 
-#: .\auths\templates\auths\login.html:21 .\auths\templates\auths\login.html:22
-#: .\auths\templates\auths\register.html:35
+#: .\auths\templates\auths\login.html:22 .\auths\templates\auths\login.html:24
 #: .\auths\templates\auths\register.html:36
+#: .\auths\templates\auths\register.html:38
 msgid "Password"
 msgstr "密码"
 
-#: .\auths\templates\auths\login.html:24
+#: .\auths\templates\auths\login.html:28
 msgid "Let me In"
 msgstr "登录"
 
-#: .\auths\templates\auths\register.html:7
+#: .\auths\templates\auths\register.html:8
 msgid "Registeration Form"
 msgstr "注册"
 
-#: .\auths\templates\auths\register.html:22
+#: .\auths\templates\auths\register.html:23
 msgid "We'll never share your email with anyone else"
 msgstr "我们不转发你的邮件"
 
-#: .\auths\templates\auths\register.html:25
+#: .\auths\templates\auths\register.html:26
 msgid "First Name"
 msgstr "你的名字"
 
-#: .\auths\templates\auths\register.html:26
+#: .\auths\templates\auths\register.html:27
 msgid "first name"
 msgstr "你的名字"
 
-#: .\auths\templates\auths\register.html:27
+#: .\auths\templates\auths\register.html:28
 msgid "Enter First Name"
 msgstr "名字"
 
-#: .\auths\templates\auths\register.html:30
+#: .\auths\templates\auths\register.html:31
 msgid "Last Name"
 msgstr "性名"
 
-#: .\auths\templates\auths\register.html:32
+#: .\auths\templates\auths\register.html:33
 msgid "Enter Last Name"
 msgstr "性名"
 
-#: .\auths\templates\auths\register.html:40
+#: .\auths\templates\auths\register.html:44
 msgid "Check me out"
 msgstr "同意"
 
-#: .\auths\templates\auths\register.html:42
+#: .\auths\templates\auths\register.html:46
 msgid "Register my in"
 msgstr "注册"
 
-#: .\auths\templates\auths\update_pass_url.html:7
-#: .\auths\templates\auths\update_pass_url.html:26 .\templates\base.html:26
+#: .\auths\templates\auths\update_pass_url.html:12
+#: .\auths\templates\auths\update_pass_url.html:38 .\templates\base.html:35
 msgid "Update Password"
 msgstr "修改密码"
 
-#: .\auths\templates\auths\update_pass_url.html:18
+#: .\auths\templates\auths\update_pass_url.html:23
 msgid "New Password"
 msgstr "新密码"
 
-#: .\auths\templates\auths\update_pass_url.html:20
+#: .\auths\templates\auths\update_pass_url.html:26
+#, fuzzy
+#| msgid "Enter New Password"
+msgid "Enter new password"
+msgstr "打字新的密码"
+
+#: .\auths\templates\auths\update_pass_url.html:27
 msgid "Enter New Password"
 msgstr "打字新的密码"
 
-#: .\auths\templates\auths\update_pass_url.html:23
-#: .\auths\templates\auths\update_pass_url.html:24
+#: .\auths\templates\auths\update_pass_url.html:32
+#: .\auths\templates\auths\update_pass_url.html:34
 msgid "Confirm Password"
 msgstr "确定密码"
 
-#: .\auths\views.py:28
+#: .\auths\views.py:29
 msgid "Duplicate email has found"
 msgstr "这个网站已经有这个邮件"
 
-#: .\auths\views.py:61
+#: .\auths\views.py:62
 msgid "Either email or password is wrong"
 msgstr "邮件还是密码不对"
 
-#: .\auths\views.py:91
+#: .\auths\views.py:96
 msgid "Both passwords are not same"
 msgstr "密码都不一样"
 
-#: .\blog_posts\settings.py:153
+#: .\blog_posts\settings.py:156
 msgid "English"
 msgstr "英语"
 
-#: .\blog_posts\settings.py:154
+#: .\blog_posts\settings.py:157
 msgid "Chinese"
 msgstr "中文"
 
-#: .\templates\base.html:7
+#: .\blog_posts\urls.py:5
+msgid "Blog Post Writer"
+msgstr ""
+
+#: .\blog_posts\urls.py:6
+msgid "blog post writer"
+msgstr ""
+
+#: .\templates\base.html:8
 msgid "Template"
 msgstr "表达"
 
-#: .\templates\base.html:20
+#: .\templates\base.html:22
+msgid "Blog Posts"
+msgstr ""
+
+#: .\templates\base.html:29
 msgid "Logout"
 msgstr "注销"
 
-#: .\templates\base.html:31
+#: .\templates\base.html:40
+#, fuzzy
+#| msgid "Login Form"
+msgid "Login"
+msgstr "登录"
+
+#: .\templates\base.html:42
 msgid "Register"
 msgstr "注册"
