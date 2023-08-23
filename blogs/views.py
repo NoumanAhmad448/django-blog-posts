@@ -1,15 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import datetime
-from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import permissions
 from rest_framework.response import Response
-
-
-def current_datetime(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
+from .keywords.html_page import HtmlPage as Words
+from api_v1.models import CreatePostModel
+from django.shortcuts import get_object_or_404
 
 @api_view(["GET","POST"])
 def create_post(request):
@@ -23,4 +18,7 @@ def create_post(request):
         #     return Response(serializer.data, status=status.HTTP_201_CREATED)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         pass
-
+@permission_classes((permissions.AllowAny,))
+def current_post(request, post_id):
+    post = get_object_or_404(CreatePostModel,id=post_id)
+    return render(request,Words.index_url, {"post" : post})

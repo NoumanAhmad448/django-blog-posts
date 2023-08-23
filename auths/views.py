@@ -12,6 +12,8 @@ from .forms.update_pass import UpdatePassForm
 from django.utils import translation as tran
 from django.conf import settings
 from .models import PasswordHistory
+from api_v1.models import CreatePostModel
+
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -40,8 +42,8 @@ def register_user(request):
 
 
 def current_posts(request):
-    context = {"test": "test2"}
-    return render(request, "auths/index.html", context)
+    posts = CreatePostModel.objects.filter(should_display=1).order_by("-created_at")
+    return render(request, Words.index_url, {"posts": posts})
 
 
 @api_view(["GET","POST"])
