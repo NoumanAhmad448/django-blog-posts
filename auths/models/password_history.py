@@ -1,11 +1,11 @@
 from django.db import models
-import datetime
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
 
 class PasswordHistory(models.Model):
-    user_id = models.IntegerField(max_length=50, verbose_name=_("User Key"))
-    created_at = models.DateField(default=datetime.date.today(),verbose_name=_("Requested Date"))
+    user_id = models.IntegerField(verbose_name=_("User Key"))
+    created_at = models.DateTimeField(default=timezone.now,verbose_name=_("Requested Date"))
 
     @property
     @admin.display(

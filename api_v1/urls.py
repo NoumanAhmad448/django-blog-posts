@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import include, path
 from .serializer import UserViewSet
 from rest_framework import routers
-from django.urls import re_path
 from . import views
 
 router = routers.DefaultRouter()
@@ -12,4 +11,5 @@ urlpatterns = [
     path("", include(router.urls), name="users"),
     path("user/<int:user_id>", views.user, name="user_info"),
     path("generate_token", views.create_token, name="create_token"),
+    path("create_post", views.create_post, name="create_post"),
 ]

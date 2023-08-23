@@ -3,15 +3,21 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from .serializer import CustomUserSerializer
 from rest_framework import permissions
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication,TokenAuthentication
 from rest_framework.parsers import JSONParser
 from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
+from .forms.create_post import CreatePostForm
+from rest_framework import status as http_status
+from .generic_funs import ApiResponse
+from .generic_funs import is_user_not_authenticated
+from django.conf import settings
 
-response = {"is_success": False, "data": []}
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes((permissions.IsAuthenticatedOrReadOnly,))
 def user(request,user_id):
+    response = {"is_success": False, "data": []}
     user_id = user_id
     user = User.objects.filter(id=user_id)
     if user is not None and user.exists():
@@ -28,6 +34,7 @@ def user(request,user_id):
 def create_token(request):
     from rest_framework.authtoken.models import Token
 
+    response = {"is_success": False, "data": []}
     data = JSONParser().parse(request)
     email = data["email"] if "email" in data else None
     password = data["password"] if "password" in data else None
@@ -55,5 +62,50 @@ def create_token(request):
     else:
         response["is_success"] = False
         response["data"] = []
-        response["message"] = "email field is required."
+        response["message"] = _("email field is required")
         return JsonResponse(response, status=400)
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, BasicAuthentication,TokenAuthentication])
+def create_post(request):
+    from .models.create_post_model import CreatePostModel
+    api_resp = ApiResponse()
+    api_resp.is_success = False
+    api_resp.data = {}
+    if settings.DEBUG:
+        api_resp.data["HTTP_AUTHORIZATION"] = request.META["HTTP_AUTHORIZATION"] if "HTTP_AUTHORIZATION" in request.META else _("no such header is found")
+
+    if is_user_not_authenticated(request):
+        status = http_status.HTTP_400_BAD_REQUEST
+        api_resp.message = _("user is not authorized")
+        return JsonResponse(api_resp.send_response(), status=status, safe=False)
+
+    data = JSONParser().parse(request)
+    create_post_form = CreatePostForm(data)
+    status = http_status.HTTP_400_BAD_REQUEST
+
+    if(create_post_form.is_valid()):
+        api_resp.data = data
+        api_resp.is_success = True
+        status = http_status.HTTP_200_OK
+        user = request.user
+
+        create_post = CreatePostModel()
+        create_post.user_id=user
+        create_post.source=create_post_form.cleaned_data["source"]
+        create_post.title=create_post_form.cleaned_data["title"]
+        create_post.tags=create_post_form.cleaned_data["tags"]
+        create_post.descrip=create_post_form.cleaned_data["descrip"]
+
+        if user.is_superuser or user.is_staff:
+            create_post.should_display = 1
+        create_post.save()
+
+    else:
+        api_resp.data = data
+        if data["source"] and data["source"] == CreatePostModel.POST_CHOICES[0][0]:
+            api_resp.message = create_post_form.errors.as_json()
+        else:
+            api_resp.message = create_post_form.errors.as_ul()
+
+    return JsonResponse(api_resp.send_response(), status=status)
