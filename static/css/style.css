@@ -15,6 +15,6 @@
     cursor: pointer;
   }
 
-  .btn_rounded{
+  .btn_rounded, .btn{
     border-radius: 25px !important;
   }

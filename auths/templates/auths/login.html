@@ -7,7 +7,7 @@
           <div class="text-center"> {% translate "Login Form" %}</div>
         </div>
         <div class="card-body">
-          <form method="post" action="/login">
+          <form method="post" action="{% url 'login_user' %}">
             {% for field in form %}
               <div class="text-danger list-unstyled">
                   <div>{{ field.errors }}</div>

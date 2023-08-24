@@ -1,10 +1,20 @@
 {% extends "base.html" %}
 {% block body %}
 {% load i18n %}
+{% load tags %}
 
 <div class="container mt-5">
     <a href="{%url 'create-post' %}" class="btn btn-outline-primary float-right"> {% translate "Create Post" %}</a>
-  <h1 class="mt-3"> {{ post.title }}</h1>
-  <div> {{ post.descrip }} </div>
-</div>
+    <h1 class="mt-3"> {{ post.title }}</h1>
+    <div class="rounded"> {{ post.descrip }} </div>
+  {% if post.tags %}
+    <div class="h5 my-3">
+      {% translate "Tags" %}
+    </div>
+      {% with tags=post.tags|split:"," %}
+        {% for tag in tags %}
+          <div class="btn btn-outline-primary"> {{ tag }}</div>
+        {% endfor %}
+      {% endwith %}
+  {% endif %}
 {% endblock  %}
