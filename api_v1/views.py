@@ -12,6 +12,7 @@ from rest_framework import status as http_status
 from .generic_funs import ApiResponse
 from .generic_funs import is_user_not_authenticated
 from django.conf import settings
+from django.http import HttpResponse
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
@@ -73,14 +74,18 @@ def create_post(request):
     api_resp.is_success = False
     api_resp.data = {}
     if settings.DEBUG:
-        api_resp.data["HTTP_AUTHORIZATION"] = request.META["HTTP_AUTHORIZATION"] if "HTTP_AUTHORIZATION" in request.META else _("no such header is found")
+        api_resp.debug["HTTP_AUTHORIZATION"] = request.META["HTTP_AUTHORIZATION"] if "HTTP_AUTHORIZATION" in request.META else _("no such header is found")
+        api_resp.debug["CONTENT_TYPE"] = request.META["CONTENT_TYPE"] if "CONTENT_TYPE" in request.META else _("no such header is found")
 
     if is_user_not_authenticated(request):
         status = http_status.HTTP_400_BAD_REQUEST
         api_resp.message = _("user is not authorized")
         return JsonResponse(api_resp.send_response(), status=status, safe=False)
 
-    data = JSONParser().parse(request)
+    if request.META["CONTENT_TYPE"] == "application/json":
+        data = JSONParser().parse(request)
+    else:
+        data = request.POST
     create_post_form = CreatePostForm(data)
     status = http_status.HTTP_400_BAD_REQUEST
 
@@ -91,7 +96,7 @@ def create_post(request):
         user = request.user
 
         create_post = CreatePostModel()
-        create_post.user_id=user
+        create_post.user=user
         create_post.source=create_post_form.cleaned_data["source"]
         create_post.title=create_post_form.cleaned_data["title"]
         create_post.tags=create_post_form.cleaned_data["tags"]
@@ -100,12 +105,12 @@ def create_post(request):
         if user.is_superuser or user.is_staff:
             create_post.should_display = 1
         create_post.save()
-
+        api_resp.data._mutable = True
+        api_resp.data["post_id"] = create_post.id
     else:
         api_resp.data = data
         if data["source"] and data["source"] == CreatePostModel.POST_CHOICES[0][0]:
             api_resp.message = create_post_form.errors.as_json()
         else:
             api_resp.message = create_post_form.errors.as_ul()
-
-    return JsonResponse(api_resp.send_response(), status=status)
+    return JsonResponse(api_resp.send_response(), status=status, safe=False)

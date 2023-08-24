@@ -14,3 +14,7 @@
     right: 4%;
     cursor: pointer;
   }
+
+  .btn_rounded{
+    border-radius: 25px !important;
+  }

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
+{% load i18n %}
 
 <div class="container mt-5">
-  <h1> {{ post.title }}</h1>
+    <a href="{%url 'create-post' %}" class="btn btn-outline-primary float-right"> {% translate "Create Post" %}</a>
+  <h1 class="mt-3"> {{ post.title }}</h1>
   <div> {{ post.descrip }} </div>
 </div>
 {% endblock  %}
