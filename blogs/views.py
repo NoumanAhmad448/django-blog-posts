@@ -31,4 +31,5 @@ def create_post(request):
 @permission_classes((permissions.AllowAny,))
 def current_post(request, post_id):
     post = get_object_or_404(CreatePostModel,id=post_id)
+    print(type(post.tags))
     return render(request,Words.index_url, {"post" : post})
