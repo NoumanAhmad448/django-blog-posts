@@ -1,4 +1,24 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block body %}
+{% if posts and posts.exists %}
+    <div class="container mt-5">
+        <div class="row">
+    {% for post in posts %}
+    <div class="col-4 pt-2">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body" style="height: 300px;">
+                <h5 class="card-title text-uppercase">{{ post.title | slice:":20" }} </h5>
+                <p class="card-text">{{ post.descrip | slice:":100" }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'current_post' post_id=post.id %}" class="btn btn-primary btn_rounded"> {% translate "Read More" %}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    </div>
 
+{% endif %}
 {% endblock  %}
