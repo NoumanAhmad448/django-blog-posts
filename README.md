@@ -7,9 +7,10 @@ Using this app, you can
 4. localization has been implementated for english and chinese languages. You can pass a get params lang=en|zh
 
 ![Alt home page](md_images/01.png "Home Page")
-![Alt home page](md_images/02.png "Registeration Page")
-![Alt home page](md_images/03.png "Login Page | in chinese")
-![Alt home page](md_images/04.png "Create a Post")
+![Alt reg page](md_images/02.png "Registeration Page")
+![Alt login page](md_images/03.png "Login Page | in chinese")
+![Alt create a post](md_images/04.png "Create a Post")
+![Alt list page](md_images/05.png "List the Post")
 
 ## Setup (Recommended)
 1. install anaconda
@@ -35,3 +36,6 @@ Using this app, you can
 1. custom middleware has been created for language translation ```middlewares.LanguageTransMiddleware```
 2. django session and token validation has been implemented
 3. front end has been developed using Jquery & Bootstrap
+4. ```Postman collection has been made online for public use```
+5. django custom template tags and filter
+6. Serializer, form validation have been implemented

@@ -1,34 +1,55 @@
 {% extends "base.html" %}
 {% block body %}
 {% load i18n %}
+{% load tags %}
 <div class="container mt-5">
+    {% if data and data is not None %}
+      {% define data.id as post_id %}
+      {% define data.title as title %}
+      {% define data.descrip as descrip %}
+      {% define data.tags as tags %}
+    {% endif %}
+
+    {% if post_id and post_id is not None %}
+      <a href="{% url 'current_post' post_id=post_id %}" class="float-right btn btn-outline-primary">{% translate "View Post" %}
+      </a>
+    {% endif %}
     <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
         <div class="card rounded">
           <div class="card-header">
-            <div class="text-center"> {% translate "Create Post" %}</div>
+            <div class="text-center">{% if data and data is not None %} {% translate "Update Post" %} {% else %} {% translate "Create Post" %} {% endif %}</div>
           </div>
           <div class="card-body">
             <form method="post" action="{% url 'create-post' %}">
               {% csrf_token %}
+              {% if errors and errors is not None %}
                 <div class="text-danger list-unstyled">
                     <div>{{ errors | safe}}</div>
                 </div>
+              {% endif %}
               <div class="form-group">
                 <label for="email">{% translate "Post Title" %}</label>
                 <input  type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
+                  value="{% if title and title is not None %} {{title}} {% endif %}"
                   placeholder="{% translate 'Enter title' %}">
                   <input type="hidden" name="source" value="web">
+                  {% if post_id and post_id is not None %}
+                    <input type="hidden" name="id" value="{% if post_id and post_id is not None %} {{post_id}} {% endif %}">
+                  {% endif %}
               </div>
               <div class="form-group">
                 <label for="descrip">{% translate 'Description' %}</label>
-                  <textarea rows="5" cols="50" class="form-control" name="descrip" id="descrip" >{% translate 'Type description of the post' %}</textarea>
+                  <textarea rows="5" cols="50" class="form-control" name="descrip" id="descrip"
+                  >{% if descrip and descrip is not None %} {{descrip}}{% else %}{% translate 'Type description of the post' %}{% endif %}</textarea>
               </div>
               <div class="form-group">
                 <label for="tags">{% translate 'Tags' %}</label>
                   <input type="text" class="form-control" name="tags" id="tags"
+                  value="{% if tags and tags is not None %} {{tags}} {% endif %}"
                   placeholder="{% translate 'type tags of the post separated by comma' %}"/>
               </div>
-              <button type="submit" class="btn btn-primary btn_rounded"> {% translate "Create Post" %}</button>
+              <button type="submit" class="btn btn-primary btn_rounded">
+                {% if data and data is not None %} {% translate "Update Post" %} {% else %} {% translate "Create Post" %} {% endif %}</button>
             </form>
           </div>
         </div>
