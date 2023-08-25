@@ -14,6 +14,7 @@ from django.urls import reverse
 
 @login_required(login_url="/login")
 def create_post(request):
+    post_model = CreatePostModel()
     if request.method == 'GET':
         data = {}
         errors = {}
@@ -21,7 +22,8 @@ def create_post(request):
             errors = request.session["errors"]
             del request.session["errors"]
         if request.GET.get("post_id") is not None:
-            data = get_object_or_404(CreatePostModel.objects.filter(id=request.GET.get("post_id")).values("id","title","descrip","tags"))
+            data = get_object_or_404(CreatePostModel.objects.filter(id=request.GET.get("post_id")).
+                                     values(post_model.ID,post_model.TITLE, post_model.DESCRIP,post_model.TAGS))
         return render(request,Words.create_post_url, {"data": data, "errors": errors})
 
     elif request.method == 'POST':

@@ -12,4 +12,5 @@ urlpatterns = [
     path("user/<int:user_id>", views.user, name="user_info"),
     path("generate_token", views.create_token, name="create_token"),
     path("create_post", views.create_post, name="create_post"),
+    path("get_post", views.get_post, name="get_post"),
 ]

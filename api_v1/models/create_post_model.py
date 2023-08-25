@@ -9,6 +9,15 @@ class CreatePostModel(models.Model):
         ("api", _("API")),
         ("web", _("web")),
     ]
+    SOURCE = "source"
+    TITLE = "title"
+    TAGS = "tags"
+    DESCRIP = "descrip"
+    SHOULD_DISPLAY = "should_display"
+    CREATED_AT = "created_at"
+    UPDATED_AT = "updated_at"
+    ID = "id"
+
     source = models.CharField(choices=POST_CHOICES,verbose_name=_("Post Source"), max_length=100)
     title = models.CharField(verbose_name=_("Post Title"),max_length=500)
     tags = models.CharField(verbose_name=_("Post Tags"),max_length=500)

@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "89101ae2-a728-4099-960c-e7efab06d8d2",
+		"name": "django-blog-creator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14838074"
+	},
+	"item": [
+		{
+			"name": "single user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{api}}/user/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate_token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test@test.com\",\r\n    \"password\": \"newpassword002\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{api}}/generate_token",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"generate_token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_post",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"source\": \"api\",\r\n    \"title\": \"lorem ipsum lorem ipsum\",\r\n    \"tags\": \"t1,t2,t3,t4,t5\",\r\n    \"descrip\": \"lorem ipsum\",\r\n    \"should_display\": true,\r\n    \"id\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{api}}/create_post?lang=zh",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"create_post"
+					],
+					"query": [
+						{
+							"key": "lang",
+							"value": "zh"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"post_id\": \"5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{api}}/get_post",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"get_post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
