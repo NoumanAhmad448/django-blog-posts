@@ -22,16 +22,20 @@
           <div class="card-body">
             <form method="post" action="{% url 'create-post' %}">
               {% csrf_token %}
+              {% if errors and errors is not None %}
                 <div class="text-danger list-unstyled">
                     <div>{{ errors | safe}}</div>
                 </div>
+              {% endif %}
               <div class="form-group">
                 <label for="email">{% translate "Post Title" %}</label>
                 <input  type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
                   value="{% if title and title is not None %} {{title}} {% endif %}"
                   placeholder="{% translate 'Enter title' %}">
                   <input type="hidden" name="source" value="web">
-                  <input type="hidden" name="id" value="{% if post_id and post_id is not None %} {{post_id}} {% endif %}">
+                  {% if post_id and post_id is not None %}
+                    <input type="hidden" name="id" value="{% if post_id and post_id is not None %} {{post_id}} {% endif %}">
+                  {% endif %}
               </div>
               <div class="form-group">
                 <label for="descrip">{% translate 'Description' %}</label>

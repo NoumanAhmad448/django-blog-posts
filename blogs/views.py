@@ -16,22 +16,30 @@ from django.urls import reverse
 def create_post(request):
     if request.method == 'GET':
         data = {}
+        errors = {}
+        if "errors" in request.session and request.session["errors"] is not None:
+            errors = request.session["errors"]
+            del request.session["errors"]
         if request.GET.get("post_id") is not None:
             data = get_object_or_404(CreatePostModel.objects.filter(id=request.GET.get("post_id")).values("id","title","descrip","tags"))
-        return render(request,Words.create_post_url, {"data": data})
+        return render(request,Words.create_post_url, {"data": data, "errors": errors})
 
     elif request.method == 'POST':
         response = create_post_api(request)
         response = json.loads(response.content)
         api_response = ApiResponse()
-        if response["is_success"]:
+        if response[api_response.IS_SUCCESS]:
             if False:
                 return redirect(reverse("current_post", args=(response[api_response.DATA]["post_id"],)))
             else:
-                return redirect(reverse("create-post")+"?post_id="+str(response[api_response.DATA]["id"]),
+                return redirect(reverse("create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip(),
                                 {"data" : response[api_response.DATA]})
         else:
-            return render(request, Words.create_post_url, {"errors": response[api_response.MESSAGE]})
+            if "id" in response[api_response.DATA] and response[api_response.DATA]["id"] is not None:
+                request.session["errors"] = response[api_response.MESSAGE]
+                return  redirect(reverse("create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip())
+            else:
+                return render(request, Words.create_post_url, {"errors": response[api_response.MESSAGE]})
 
 
 

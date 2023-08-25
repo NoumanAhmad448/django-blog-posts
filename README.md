@@ -7,9 +7,10 @@ Using this app, you can
 4. localization has been implementated for english and chinese languages. You can pass a get params lang=en|zh
 
 ![Alt home page](md_images/01.png "Home Page")
-![Alt home page](md_images/02.png "Registeration Page")
-![Alt home page](md_images/03.png "Login Page | in chinese")
-![Alt home page](md_images/04.png "Create a Post")
+![Alt reg page](md_images/02.png "Registeration Page")
+![Alt login page](md_images/03.png "Login Page | in chinese")
+![Alt create a post](md_images/04.png "Create a Post")
+![Alt list page](md_images/05.png "List the Post")
 
 ## Setup (Recommended)
 1. install anaconda

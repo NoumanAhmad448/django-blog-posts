@@ -4,7 +4,12 @@
 {% load tags %}
 
 <div class="container mt-5">
-    <a href="{%url 'create-post' %}" class="btn btn-outline-primary float-right"> {% translate "Create Post" %}</a>
+   <section class="float-right ">
+      <a href="{%url 'create-post' %}" class="btn btn-outline-primary "> {% translate "Create Post" %}</a>
+      {% if request.user == post.user %}
+        <a href="{%url 'create-post' %}?post_id={{post.id}}" class="btn btn-outline-primary "> {% translate "Edit Post" %}</a>
+      {% endif %}
+    </section>
     <h1 class="mt-3"> {{ post.title }}</h1>
     <div class="rounded"> {{ post.descrip }} </div>
   {% if post.tags %}
