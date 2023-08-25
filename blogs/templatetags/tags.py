@@ -11,3 +11,8 @@ def type(value):
 def split(value,args):
     """split the string to list"""
     return value.split(" ") if args.strip() == "" else value.split(args)
+
+
+@register.simple_tag
+def define(val=None):
+  return val

@@ -86,6 +86,8 @@ def create_post(request):
         data = JSONParser().parse(request)
     else:
         data = request.POST
+        data._mutable = True
+
     create_post_form = CreatePostForm(data)
     status = http_status.HTTP_400_BAD_REQUEST
 
@@ -95,18 +97,34 @@ def create_post(request):
         status = http_status.HTTP_200_OK
         user = request.user
 
-        create_post = CreatePostModel()
-        create_post.user=user
-        create_post.source=create_post_form.cleaned_data["source"]
-        create_post.title=create_post_form.cleaned_data["title"]
-        create_post.tags=create_post_form.cleaned_data["tags"]
-        create_post.descrip=create_post_form.cleaned_data["descrip"]
+        id = data["id"] if "id" in data else None
+        if id and id is not None:
+            create_post = CreatePostModel.objects.filter(id=id,user=user).first()
+        else:
+            create_post = CreatePostModel()
+        if create_post:
+            create_post.user=user
+            create_post.source=create_post_form.cleaned_data["source"]
+            create_post.title=create_post_form.cleaned_data["title"]
+            create_post.tags=create_post_form.cleaned_data["tags"]
+            create_post.descrip=create_post_form.cleaned_data["descrip"]
 
-        if user.is_superuser or user.is_staff:
-            create_post.should_display = 1
-        create_post.save()
-        api_resp.data._mutable = True
-        api_resp.data["post_id"] = create_post.id
+            if user.is_superuser or user.is_staff:
+                create_post.should_display = 1
+            if id is not None:
+                import datetime
+                create_post.updated_at = datetime.datetime.now()
+
+            create_post.save()
+
+            if id and id is None:
+                api_resp.data["id"] = id
+            else:
+                api_resp.data["id"] = create_post.id
+        else:
+            status = http_status.HTTP_403_FORBIDDEN
+            api_resp.is_success = False
+            api_resp.message = _("this user is not authorized to update the post")
     else:
         api_resp.data = data
         if data["source"] and data["source"] == CreatePostModel.POST_CHOICES[0][0]:
