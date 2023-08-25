@@ -36,3 +36,6 @@ Using this app, you can
 1. custom middleware has been created for language translation ```middlewares.LanguageTransMiddleware```
 2. django session and token validation has been implemented
 3. front end has been developed using Jquery & Bootstrap
+4. ```Postman collection has been made online for public use```
+5. django custom template tags and filter
+6. Serializer, form validation have been implemented
