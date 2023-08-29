@@ -21,6 +21,7 @@ Using this app, you can
 5. you need to setup database(mysql) in ```settings.py```
 6. create a database ```django_blog_posts``` in the database
 7. run migrations using ```python manage.py migrate```
+8. run ```python manage.py runserver```
 
 
 ## locationlization rules

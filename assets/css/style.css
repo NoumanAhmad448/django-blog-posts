@@ -1,5 +1,5 @@
 .password-container{
-    width: 400px !important;
+    width: 300px !important;
     position: relative;
   }
   .password-container input[type="password"],
@@ -10,7 +10,11 @@
   }
   .bi{
     position: absolute;
-    top: 28%;
+    top: 12%;
     right: 4%;
     cursor: pointer;
+  }
+
+  .btn_rounded, .btn{
+    border-radius: 25px !important;
   }
