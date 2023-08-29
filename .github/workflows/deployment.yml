@@ -20,7 +20,7 @@ jobs:
         username: ${{secrets.FTP_USERNAME}}
         password: ${{secrets.FTP_PASS}}
         server-dir: /
-        local-dir: 'django_blog_posts.lyskills.com/'
+        local-dir: 'django_blog_posts.lyskills.com'
         git-ftp-args: '--all'
 
 
