@@ -1,0 +1,33 @@
+DirectoryIndex index.html
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+WSGIScriptAlias / blog_posts/mysite/wsgi.py
+WSGIPythonHome /path/to/venv
+WSGIPythonPath /path/to/mysite.com
+
+WSGIDaemonProcess django-blog python-home=/root/anaconda3/envs/django-blog-posts python-path=/root/anaconda3/envs/django-blog-posts/bin/python
+WSGIProcessGroup django-blog
+
+Alias /robots.txt blog_posts/static/robots.txt
+Alias /favicon.ico blog_posts/static/favicon.ico
+
+Alias /assets/ blog_posts/assets/
+Alias /static/ blog_posts/static/
+
+<Directory blog_posts>
+<Files wsgi.py>
+Require all granted
+</Files>
+</Directory>
+
+
+<Directory blog_posts/static>
+Require all granted
+</Directory>
+
+<Directory blog_posts/assets>
+Require all granted
+</Directory>
