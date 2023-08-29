@@ -1,0 +1,30 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ "master" ]
+jobs:
+  laravel-deployment:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7, 3.8, 3.10]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        server: ${{secrets.FTP_SERVER}}
+        username: ${{secrets.FTP_USERNAME}}
+        password: ${{secrets.FTP_PASS}}
+        server-dir: /django_blog_posts.lyskills.com
+
+    - name: Running Scripts
+      uses: appleboy/ssh-action@master
+      with:
+        username: ${{secrets.SSH_USERNAME}}
+        host: ${{secrets.SERVER_IP}}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: 'cd /home/usmansaleem234/public_html/django_blog_posts.lyskills.com && chmod u+x ./server_deploy.sh && ./server_deploy.sh'
