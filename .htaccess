@@ -5,8 +5,8 @@ RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 WSGIScriptAlias / blog_posts/mysite/wsgi.py
-WSGIPythonHome /path/to/venv
-WSGIPythonPath /path/to/mysite.com
+WSGIPythonHome /root/anaconda3/envs/django-blog-posts
+WSGIPythonPath /root/anaconda3/envs/django-blog-posts/bin/python
 
 WSGIDaemonProcess django-blog python-home=/root/anaconda3/envs/django-blog-posts python-path=/root/anaconda3/envs/django-blog-posts/bin/python
 WSGIProcessGroup django-blog
