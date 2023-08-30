@@ -18,6 +18,7 @@ Using this app, you can
 ``` conda create -n "django-blog-posts" python=3.10```
 3. run ```conda activate django-blog-posts```
 4. run ```pip install -r requirements.txt```
+5. replace file name in blog_posts/copy_settings.py to settings.py
 5. you need to setup database(mysql) in ```settings.py```
 6. create a database ```django_blog_posts``` in the database
 7. run migrations using ```python manage.py migrate```
