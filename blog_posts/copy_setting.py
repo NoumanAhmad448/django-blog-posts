@@ -97,14 +97,6 @@ DATABASES = {
         "PASSWORD": "django_blog_posts",
         "HOST": "127.0.0.1",
         "PORT": "3306",
-    },
-     "live": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "usmansaleem234_django_blog_posts",
-        "USER": "django_blog_posts",
-        "PASSWORD": "django_blog_posts",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
     }
 }
 
