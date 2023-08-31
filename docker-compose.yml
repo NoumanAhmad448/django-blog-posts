@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    container_name:  db
+    image: mysql:8
+    ports:
+      - '3306:3306'
+    environment:
+       MYSQL_DATABASE: 'django_blog_posts'
+       MYSQL_USER: 'root'
+       MYSQL_PASSWORD: ''
+       MYSQL_ROOT_PASSWORD: ''
+       MYSQL_ALLOW_EMPTY_PASSWORD: yes
+  web:
+    container_name:  blog-post
+    build: .
+    command: python manage.py makemigrations && python manage.py migrate && \
+             python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
