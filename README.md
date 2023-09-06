@@ -46,3 +46,6 @@ Using this app, you can
 4. ```Postman collection has been made online for public use```
 5. django custom template tags and filter
 6. Serializer, form validation have been implemented
+
+## Deployment
+To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md)
