@@ -49,3 +49,14 @@ Using this app, you can
 
 ## Deployment
 To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md)
+
+## Common Commands
+1. python manage.py migrate
+2. python manage.py runserver
+3. python manage.py collectstatic
+4. docker exec -it blog_post /bin/bash
+## mysql commands
+1.  CREATE USER 'root2'@'localhost' IDENTIFIED BY 'root2';
+2.  GRANT ALL PRIVILEGES ON * . * TO 'root2'@'localhost';
+3.  FLUSH PRIVILEGES;
+

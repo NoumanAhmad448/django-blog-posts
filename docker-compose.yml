@@ -5,23 +5,33 @@ services:
     container_name:  db
     image: mysql:8
     ports:
-      - '5000:3307'
-    # volumes:
-    #   - "/mnt/mysql:/var/lib/mysql"
+      - '33360:3307'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+      - /tmp/blog_post/mysqld:/var/run/mysqld
     environment:
        MYSQL_DATABASE: 'django_blog_posts'
-      #  MYSQL_USER: 'root'
-      #  MYSQL_PASSWORD: 'ahmad'
+       MYSQL_USER: 'root2'
+       MYSQL_PASSWORD: 'root2'
        MYSQL_ROOT_PASSWORD: 'root'
       #  MYSQL_ALLOW_EMPTY_PASSWORD: yes
   web:
-    container_name:  blog-post
+    container_name:  blog_post
     build: .
     command: #python manage.py makemigrations && python manage.py migrate && \
               python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
+      - /tmp/blog_post/mysqld:/run/mysqld
+    restart: unless-stopped
+    # network_mode: 127.0.0.1
     ports:
       - "8000:8000"
     depends_on:
       - db
+volumes:
+  mysql_data:
