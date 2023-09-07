@@ -28,7 +28,10 @@ Using this app, you can
 1. you may refer to deployment.yml file in github Action for deployment
 
 # Dockering Version
-1. run command ```docker-compose up```
+1. run command
+```
+docker-compose up
+```
 
 ## locationlization rules
 1. install gettext. follow django documentation or Google it
