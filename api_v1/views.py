@@ -112,6 +112,8 @@ def create_post(request):
 
             if user.is_superuser or user.is_staff:
                 create_post.should_display = 1
+            else:
+                create_post.should_display = 0
             if id is not None:
                 import datetime
                 create_post.updated_at = datetime.datetime.now()
