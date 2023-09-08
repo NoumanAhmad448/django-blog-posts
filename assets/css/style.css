@@ -1,20 +1,23 @@
 .password-container{
-    width: 300px !important;
-    position: relative;
-  }
-  .password-container input[type="password"],
-  .password-container input[type="text"]{
-    width: 100%;
-    padding: 12px 36px 12px 12px;
-    box-sizing: border-box;
-  }
-  .bi{
-    position: absolute;
-    top: 12%;
-    right: 4%;
-    cursor: pointer;
-  }
+  width: 300px !important;
+  position: relative;
+}
+.password-container input[type="password"],
+.password-container input[type="text"]{
+  width: 100%;
+  padding: 12px 36px 12px 12px;
+  box-sizing: border-box;
+}
+.bi{
+  position: absolute;
+  top: 12%;
+  right: 4%;
+  cursor: pointer;
+}
 
-  .btn_rounded, .btn{
-    border-radius: 25px !important;
-  }
+.btn_rounded, .btn{
+  border-radius: 25px !important;
+}
+h1{
+  font-size: 1.8rem !important;
+}

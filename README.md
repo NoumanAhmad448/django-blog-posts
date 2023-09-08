@@ -32,7 +32,7 @@ Using this app, you can
 ```
 docker-compose up
 ```
-
+For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-compose.yml)
 ## locationlization rules
 1. install gettext. follow django documentation or Google it
 2. following commands can be handy while creating locationlization
@@ -40,7 +40,7 @@ docker-compose up
     2. django-admin compilemessages
 
 ## Information
-1. super user credentials: username: test_user  password:Silver009@t
+1. super user credentials: username: test_user  password:test_user
 
 ## Technical Knowledge
 1. custom middleware has been created for language translation ```middlewares.LanguageTransMiddleware```
@@ -58,6 +58,8 @@ To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md
 2. python manage.py runserver
 3. python manage.py collectstatic
 4. docker exec -it blog_post /bin/bash
+5. conda activate django-blog-posts
+6. pip list
 ## mysql commands
 1.  CREATE USER 'root2'@'localhost' IDENTIFIED BY 'root2';
 2.  GRANT ALL PRIVILEGES ON * . * TO 'root2'@'localhost';

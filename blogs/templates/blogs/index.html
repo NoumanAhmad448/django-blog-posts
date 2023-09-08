@@ -6,6 +6,19 @@
 <div class="container mt-5">
    <section class="float-right ">
       <a href="{%url 'create-post' %}" class="btn btn-outline-primary "> {% translate "Create Post" %}</a>
+      {% if not is_post_bookmarked %}
+      <form action="{%url 'bookmark_post' %}" method="post" style="display: inline-block">
+        <input type="hidden" name="post_id" value="{{post.id}}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary "> {% translate "Bookmark Post" %}</button>
+      </form>
+      {% else %}
+        <form action="{%url 'unbookmark_post' %}" method="post" style="display: inline-block">
+          <input type="hidden" name="post_id" value="{{post.id}}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary "> {% translate "UnFavorite" %}</button>
+        </form>
+      {% endif %}
       {% if request.user == post.user %}
         <a href="{%url 'create-post' %}?post_id={{post.id}}" class="btn btn-outline-primary "> {% translate "Edit Post" %}</a>
       {% endif %}

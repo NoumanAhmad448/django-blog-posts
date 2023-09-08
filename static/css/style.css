@@ -18,3 +18,6 @@
   .btn_rounded, .btn{
     border-radius: 25px !important;
   }
+  h1{
+    font-size: 1.8rem !important;
+  }

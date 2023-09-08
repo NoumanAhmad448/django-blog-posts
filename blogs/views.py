@@ -10,7 +10,8 @@ from api_v1.generic_funs import ApiResponse
 from django.shortcuts import redirect
 import json
 from django.urls import reverse
-
+from .models import BookmarkPostModel
+import datetime
 
 @login_required(login_url="/login")
 def create_post(request):
@@ -48,4 +49,48 @@ def create_post(request):
 @permission_classes((permissions.AllowAny,))
 def current_post(request, post_id):
     post = get_object_or_404(CreatePostModel,id=post_id)
-    return render(request,Words.index_url, {"post" : post})
+    user = request.user
+    is_post_bookmarked = False
+    if user is not None:
+        is_post_bookmarked = BookmarkPostModel.objects.filter(post=post.id,user=user.id).exists()
+    return render(request,Words.index_url, {"post" : post,
+                                            "is_post_bookmarked": is_post_bookmarked})
+
+@login_required(login_url="/login")
+def show_posts(request):
+    posts = CreatePostModel.objects.filter(user_id=request.user.id).order_by("-created_at")
+    return render(request, Words.show_posts_url, {"posts": posts})
+
+@login_required(login_url="/login")
+def bookmark_post(request):
+    if request.method == 'GET':
+        bookmark_posts = BookmarkPostModel.objects.filter(user=request.user.id)
+        return render(request, Words.bookmark_posts_url, {"bookmark_posts": bookmark_posts})
+
+    if request.method == 'POST':
+        post_id = request.POST["post_id"]
+        post = get_object_or_404(CreatePostModel.objects.filter(id=post_id))
+        user = request.user
+        bookmark_post = BookmarkPostModel.objects.filter(user=user.id,post=post_id)
+        is_save = False
+        if not bookmark_post.exists():
+            bookmark_post = BookmarkPostModel()
+            is_save = True
+
+        bookmark_post.user = user
+        bookmark_post.post = post
+        bookmark_post.updated_at = datetime.datetime.now()
+        if is_save:
+            bookmark_post.save()
+        else:
+            bookmark_post.update()
+        return redirect(reverse("bookmark_post"))
+
+@login_required(login_url="/login")
+def unbookmark_post(request):
+    if request.method == 'POST':
+        post_id = request.POST["post_id"]
+        print(post_id)
+        post = get_object_or_404(CreatePostModel.objects.filter(id=post_id))
+        BookmarkPostModel.objects.filter(user=request.user.id,post=post.id).delete()
+        return redirect(reverse("current_post", kwargs={"post_id":post.id}))

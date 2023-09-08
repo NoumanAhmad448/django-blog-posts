@@ -1,0 +1,1 @@
+from .post_bookmark_model import *
