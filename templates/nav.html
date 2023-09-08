@@ -25,6 +25,12 @@
                 <button class="dropdown-item" type="button"><a href="{% url 'create-post' %}">
                     {% translate "Create Post" %} </a>
                 </button>
+                <button class="dropdown-item" type="button"><a href="{% url 'show_posts' %}">
+                    {% translate "My Posts" %} </a>
+                </button>
+                <button class="dropdown-item" type="button"><a href="{% url 'bookmark_post' %}">
+                    {% translate "Bookmarked Posts" %} </a>
+                </button>
             </div>
         </div>
         {% elif request.path == register_user %}
