@@ -5,6 +5,8 @@ Using this app, you can
 2. fetch the user detail using API
 3. create a token for API validation
 4. localization has been implementated for english and chinese languages. You can pass a get params lang=en|zh
+5. create, update a post. Every post require admin approval
+6. every post can be bookmark/unbookmark on user request
 
 ![Alt home page](md_images/01.png "Home Page")
 ![Alt reg page](md_images/02.png "Registeration Page")
@@ -19,10 +21,11 @@ Using this app, you can
 3. run ```conda activate django-blog-posts```
 4. run ```pip install -r requirements.txt```
 5. replace file name in blog_posts/copy_settings.py to settings.py
-5. you need to setup database(mysql) in ```settings.py```
-6. create a database ```django_blog_posts``` in the database
-7. run migrations using ```python manage.py migrate```
-8. run ```python manage.py runserver```
+6. you need to setup database(mysql) in ```.env``` file. Just replace .env.backup to .env and add db credentials
+7. install redis and change your server path in .env file
+7. create a database ```django_blog_posts``` in the database
+8. run migrations using ```python manage.py migrate```
+9. run ```python manage.py runserver```
 
 # Auto Deployment using Github Actions
 1. you may refer to deployment.yml file in github Action for deployment

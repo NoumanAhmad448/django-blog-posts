@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
+env = os.environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-00@vnn_mc=xdwf2b=-rsv7p74a6$etdl(yixwawtd6ncngeom5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1","localhost"]
+ALLOWED_HOSTS = json.loads(os.environ.get("ALLOWED_HOSTS"))
 
 
 # Application definition
@@ -92,8 +97,16 @@ WSGI_APPLICATION = 'blog_posts.wsgi.application'
 DATABASES = {
      "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "django_blog_posts",
-        "USER": "root",
+        "NAME": os.environ.get("DEFAULT_DATABASE_NAME"),
+        "USER": os.environ.get("DEFAULT_DATABASE_USERNAME"),
+        "PASSWORD": os.environ.get("DEFAULT_DATABASE_PASSWORD"),
+        "HOST": os.environ.get("DEFAULT_DATABASE_HOST"),
+        "PORT": os.environ.get("DEFAULT_DATABASE_PORT"),
+    },
+     "live": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "usmansaleem234_django_blog_posts",
+        "USER": "django_blog_posts",
         "PASSWORD": "django_blog_posts",
         "HOST": "127.0.0.1",
         "PORT": "3306",
@@ -165,3 +178,32 @@ STATICFILES_DIRS =  [ os.path.join(BASE_DIR,'static')]
 LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )
 
 DATE_FORMAT="d F Y"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "debug.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": env.get("REDIS_LOCATION"),
+        "KEY_PREFIX": "wiki",
+        "TIMEOUT": env.get("REDIS_TIMEOUT"),
+        # "LOCATION": "redis://username:password@127.0.0.1:6379",
+    }
+}
