@@ -17,15 +17,29 @@ Using this app, you can
 ## Setup (Recommended)
 1. install anaconda
 2. create an environment using
-``` conda create -n "django-blog-posts" python=3.10```
-3. run ```conda activate django-blog-posts```
-4. run ```pip install -r requirements.txt```
+```
+ conda create -n "django-blog-posts" python=3.10
+ ```
+3. run
+```
+conda activate django-blog-posts
+```
+4. run
+```
+pip install -r requirements.txt
+```
 5. replace file name in blog_posts/copy_settings.py to settings.py
 6. you need to setup database(mysql) in ```.env``` file. Just replace .env.backup to .env and add db credentials
-7. install redis and change your server path in .env file
+7. install ```redis``` and change your server path in ```.env``` file
 7. create a database ```django_blog_posts``` in the database
-8. run migrations using ```python manage.py migrate```
-9. run ```python manage.py runserver```
+8. run migrations using
+```
+python manage.py migrate
+```
+9. run
+ ```
+ python manage.py runserver
+ ```
 
 # Auto Deployment using Github Actions
 1. you may refer to deployment.yml file in github Action for deployment
@@ -39,8 +53,14 @@ For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-c
 ## locationlization rules
 1. install gettext. follow django documentation or Google it
 2. following commands can be handy while creating locationlization
-    1. django-admin makemessages --locale=zh --extension=html,txt,py
-    2. django-admin compilemessages
+    1. run
+    ```
+    django-admin makemessages --locale=zh --extension=html,txt,py
+    ```
+    2. run
+    ```
+    django-admin compilemessages
+    ```
 
 ## Information
 1. super user credentials: username: test_user  password:test_user
@@ -57,14 +77,32 @@ For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-c
 To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md)
 
 ## Common Commands
-1. python manage.py migrate
-2. python manage.py runserver
-3. python manage.py collectstatic
-4. docker exec -it blog_post /bin/bash
-5. conda activate django-blog-posts
-6. pip list
+```
+python manage.py migrate
+```
+```
+python manage.py runserver
+```
+```
+python manage.py collectstatic
+```
+```
+docker exec -it blog_post /bin/bash
+```
+```
+conda activate django-blog-posts
+```
+```
+pip list
+```
 ## mysql commands
-1.  CREATE USER 'root2'@'localhost' IDENTIFIED BY 'root2';
-2.  GRANT ALL PRIVILEGES ON * . * TO 'root2'@'localhost';
-3.  FLUSH PRIVILEGES;
+```
+CREATE USER 'root2'@'localhost' IDENTIFIED BY 'root2';
+```
+```
+GRANT ALL PRIVILEGES ON * . * TO 'root2'@'localhost';
+```
+```
+FLUSH PRIVILEGES;
+```
 
