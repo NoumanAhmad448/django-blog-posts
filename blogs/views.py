@@ -12,8 +12,19 @@ import json
 from django.urls import reverse
 from .models import BookmarkPostModel
 import datetime
+from django.views.decorators.cache import cache_page
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+
+env = os.environ
+
+REDIS_TIMEOUT= int(60*30 if env.get("REDIS_TIMEOUT") is None else env.get("REDIS_TIMEOUT"))
+
 
 @login_required(login_url="/login")
+@cache_page(REDIS_TIMEOUT)
 def create_post(request):
     post_model = CreatePostModel()
     if request.method == 'GET':
@@ -57,6 +68,7 @@ def current_post(request, post_id):
                                             "is_post_bookmarked": is_post_bookmarked})
 
 @login_required(login_url="/login")
+@cache_page(REDIS_TIMEOUT)
 def show_posts(request):
     posts = CreatePostModel.objects.filter(user_id=request.user.id).order_by("-created_at")
     return render(request, Words.show_posts_url, {"posts": posts})
