@@ -13,7 +13,9 @@ from django.utils import translation as tran
 from django.conf import settings
 from .models import PasswordHistory
 from api_v1.models import CreatePostModel
-
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -91,6 +93,18 @@ def forgot_password(request):
                     user.set_password(new_password)
                     user.save()
                     PasswordHistory.objects.create(user_id=user.id)
+                    # send email only if configuration is set
+                    if settings.EMAIL_HOST_EXIST is not None :
+                        html_content = render_to_string(Words.update_pass_temp,
+                                                        {
+                                                            'username': f"{user.first_name} {user.last_name}",
+                                                            'website_url': settings.ALLOWED_HOSTS[0],
+                                                            'website_name': settings.WEBISTE_NAME
+                                                        }
+                                                        )
+                        send_mail(subject="PASSWORD HAS BEEN CHANGED", recipient_list=[user.email],
+                                  html_message=html_content, from_email=settings.DEFAULT_FROM_EMAIL,
+                                  message=strip_tags(html_content))
                     return redirect("/",permanent=True)
                 else:
                     return render(request, Words.update_pass_url, {"form": form})
@@ -99,3 +113,10 @@ def forgot_password(request):
                 return render(request, Words.update_pass_url, {"form": form})
         else:
             return render(request, Words.update_pass_url, {"form": form})
+
+
+from .tasks import add
+
+def test_cel():
+    results = add.delay(4,4)
+    print(results)

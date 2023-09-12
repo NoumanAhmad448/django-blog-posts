@@ -207,3 +207,13 @@ CACHES = {
         # "LOCATION": "redis://username:password@127.0.0.1:6379",
     }
 }
+
+
+# send email only if configuration is set
+EMAIL_HOST_EXIST=True #if this is not set to true email will not be fired
+EMAIL_HOST=env.get("EMAIL_HOST")
+EMAIL_HOST_PASSWORD=env.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER=env.get("EMAIL_HOST_USER")
+EMAIL_PORT=env.get("EMAIL_PORT")
+DEFAULT_FROM_EMAIL=env.get("DEFAULT_FROM_EMAIL")
+EMAIL_USE_TLS=True
