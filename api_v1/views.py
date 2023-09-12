@@ -14,6 +14,7 @@ from .generic_funs import is_user_not_authenticated
 from django.conf import settings
 from .models.create_post_model import CreatePostModel
 from django.shortcuts import get_object_or_404
+from .serializers.create_post_serializer import PostSerializer
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
@@ -154,7 +155,6 @@ def get_post(request):
 
     request = JSONParser().parse(request)
     from .forms.get_post import GetPostForm
-    from .serializers.create_post_serializer import PostSerializer
     form = GetPostForm(request)
     if form.is_valid():
         api_resp.is_success = True
@@ -165,4 +165,19 @@ def get_post(request):
     else:
         api_resp.message =  form.errors.as_json()
         status=http_status.HTTP_400_BAD_REQUEST
+    return JsonResponse(api_resp.send_response(), status=status, safe=False)
+
+@api_view(['GET'])
+def posts(request):
+    api_resp = ApiResponse()
+    api_resp.is_success = False
+    api_resp.data = {}
+
+    posts = CreatePostModel.objects.filter(should_display=1)
+    status= http_status.HTTP_200_OK
+    if posts.exists():
+        api_resp.is_success = True
+        api_resp.data = PostSerializer(posts,many=True).data
+    else:
+        api_resp.message = "no post is found"
     return JsonResponse(api_resp.send_response(), status=status, safe=False)

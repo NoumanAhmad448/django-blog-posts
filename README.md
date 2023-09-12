@@ -7,6 +7,7 @@ Using this app, you can
 4. localization has been implementated for english and chinese languages. You can pass a get params lang=en|zh
 5. create, update a post. Every post require admin approval
 6. every post can be bookmark/unbookmark on user request
+7. On updating the password, system will fire an email to the related user. You need to make sure all the settings are properly setup in settings.py and .env files. If you want to skip sending the email, make sure to set EMAIL_HOST_EXIST as None. No further changes are required.
 
 ![Alt home page](md_images/01.png "Home Page")
 ![Alt reg page](md_images/02.png "Registeration Page")
@@ -94,6 +95,9 @@ conda activate django-blog-posts
 ```
 ```
 pip list
+```
+```
+ python manage.py test
 ```
 ## mysql commands
 ```
