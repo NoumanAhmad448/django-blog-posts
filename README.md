@@ -77,6 +77,10 @@ For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-c
 ## Deployment
 To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md)
 
+# FAST API
+you may refer to [fast_api](/fast_api/) for all API ends point.
+```Note: you may not get db schema as I am using the same django db schema```
+
 ## Common Commands
 ```
 python manage.py migrate
