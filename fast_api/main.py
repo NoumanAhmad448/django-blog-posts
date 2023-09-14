@@ -4,9 +4,10 @@ from models.PostModel import  get_post_by_id
 from constants import Constant
 from db import get_db
 from sqlalchemy.orm import Session
-
+from exception_handlers import unhandled_exception_handler
 app = FastAPI()
 
+app.add_exception_handler(Exception, unhandled_exception_handler)
 
 @app.get(f"{Constant.API_V1}")
 async def root():

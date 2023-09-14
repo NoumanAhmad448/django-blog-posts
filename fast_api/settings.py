@@ -7,6 +7,9 @@ env = os.environ
 
 APP_NAME="FAST API"
 
+# use proformance less stratgies
+NOT_PRO_LESS = False
+
 DATABASE_NAME = "default"
 
 DATABASES = {

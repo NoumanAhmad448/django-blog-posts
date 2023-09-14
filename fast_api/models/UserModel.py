@@ -2,10 +2,8 @@ from sqlalchemy import Boolean, Column, DateTime, Integer, String, select
 from db import Base
 from sqlalchemy.orm import Session,aliased
 from fastapi.responses import JSONResponse
-
 class User(Base):
     __tablename__ = "auth_user"
-    include_columns = ["email","id","last_login"]
 
     id = Column(Integer, primary_key=True, index=True,autoincrement=True)
     email = Column(String(254), unique=True)
@@ -17,6 +15,8 @@ class User(Base):
     is_staff = Column(Boolean, nullable=True)
     is_active = Column(Boolean, nullable=True)
     date_joined = Column(DateTime)
+
+
 
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
