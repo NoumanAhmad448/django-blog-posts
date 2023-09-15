@@ -79,7 +79,11 @@ To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md
 
 # FAST API
 you may refer to [fast_api](/fast_api/) for all API ends point.
-```Note: you may not get db schema as I am using the same django db schema```
+```Note: you may not get db schema as I am using the same django db schema.
+Further Do not forget to check the swagger documentation by visiting the
+
+** your_server/docs **
+```
 
 ## Common Commands
 ```

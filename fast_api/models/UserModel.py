@@ -16,8 +16,6 @@ class User(Base):
     is_active = Column(Boolean, nullable=True)
     date_joined = Column(DateTime)
 
-
-
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 

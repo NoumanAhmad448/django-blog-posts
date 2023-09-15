@@ -2,7 +2,7 @@ from sqlalchemy import Boolean, Column, DateTime, Integer, String, select, Forei
 from db import Base
 from sqlalchemy.orm import Session,Mapped,relationship,aliased,mapped_column,selectin_polymorphic
 from fastapi.responses import JSONResponse
-from fastapi import status
+from fastapi import status, Response
 from models.UserModel import User
 import settings
 
@@ -53,3 +53,29 @@ def get_post_by_id(db: Session, post_id: int):
                 "is_succes" : False
             },status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+def get_has_post_users(db: Session,default_post: int):
+    u = aliased(User)
+    p = aliased(Post)
+
+    subq = (
+     select(func.count(p.id))
+        .where(u.id == p.user_id)
+        .group_by(p.user_id)
+        .having(func.count(p.user_id) > default_post)
+     ).exists()
+
+
+    q = [u.id]
+    if True:
+        q.append(u.email)
+
+    if True:
+        q.append(u.username)
+
+    results= db.execute(select(*q).select_from(u).where(subq)).mappings().all()
+    if len(results) > 0:
+        return results
+    else:
+        return JSONResponse({"detail": "record not found",
+        "is_succes" : False}, status_code=status.HTTP_200_OK)
