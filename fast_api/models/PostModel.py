@@ -1,6 +1,6 @@
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, select, ForeignKey
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, select, ForeignKey,func,and_
 from db import Base
-from sqlalchemy.orm import Session,Mapped,relationship,aliased,mapped_column,selectin_polymorphic,with_polymorphic
+from sqlalchemy.orm import Session,Mapped,relationship,aliased,mapped_column,selectin_polymorphic
 from fastapi.responses import JSONResponse
 from fastapi import status
 from models.UserModel import User
@@ -18,29 +18,32 @@ class Post(Base):
     created_at :Mapped[DateTime] = mapped_column(DateTime)
     updated_at :Mapped[DateTime] = mapped_column(DateTime)
     user_id :Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
-    user :Mapped[str] = relationship(User)
+    user :Mapped[User] = relationship(User)
 
 
 def get_post_by_id(db: Session, post_id: int):
     try:
         p = aliased(Post)
         u = aliased(User)
-
         if settings.NOT_PRO_LESS:
-            results = db.scalars(
+            results = db.scalar(
                 select(p).join(p.user_id.and_(u.is_active == True)).where(p.id == post_id)
             ).first()
         else:
             results = db.scalar(
                 select(p,u)
-                .where(p.id == post_id)
+                .join(User)
+                .where(and_(p.id == post_id,p.should_display == 1))
                 .order_by(p.id)
-                .options(
-                    selectin_polymorphic(p, [u]),
-                )
             )
 
+        stmt  = select(func.count("*").label("total_count")).select_from(u)
+        total_count = db.scalar(stmt)
+
         if results is not None:
+            if settings.DEBUG:
+                pass
+            results.total_count = total_count
             return results
         else:
             return JSONResponse({"detail": "record not found",

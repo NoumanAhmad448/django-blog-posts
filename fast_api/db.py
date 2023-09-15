@@ -6,7 +6,7 @@ import settings
 DB_URL = settings.DATABASE_URL
 
 engine = create_engine(
-    DB_URL
+    DB_URL, echo= True if settings.DEBUG else ""
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
