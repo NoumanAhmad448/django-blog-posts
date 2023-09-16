@@ -32,7 +32,7 @@ def get_post_by_id(db: Session, post_id: int):
         else:
             results = db.scalar(
                 select(p,u)
-                .join(User)
+                .join(u)
                 .where(and_(p.id == post_id,p.should_display == 1))
                 .order_by(p.id)
             )
@@ -79,3 +79,30 @@ def get_has_post_users(db: Session,default_post: int):
     else:
         return JSONResponse({"detail": "record not found",
         "is_succes" : False}, status_code=status.HTTP_200_OK)
+
+def get_users_without_posts(db: Session,default_post: int):
+    u = aliased(User)
+    p = aliased(Post)
+
+    subq = (
+     select(func.count(p.id))
+        .where(u.id == p.user_id)
+        .group_by(p.user_id)
+        .having(func.count(p.user_id) > default_post)
+     ).exists()
+
+
+    q = [u.id]
+    if True:
+        q.append(u.email)
+
+    if True:
+        q.append(u.username)
+
+    results= db.execute(select(*q).select_from(u).where(~subq)).mappings().all()
+    if len(results) > 0:
+        return results
+    else:
+        return JSONResponse({"detail": "record not found",
+        "is_succes" : False}, status_code=status.HTTP_200_OK)
+

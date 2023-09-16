@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, select
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, select,label,func
 from db import Base
 from sqlalchemy.orm import Session,aliased
 from fastapi.responses import JSONResponse
@@ -21,17 +21,20 @@ class User(Base):
 
 def get_user_by_userid(db: Session, user_id: int):
     u = aliased(User)
+    fields = [u.first_name,u.last_name.label("family_name")]
+    if True:
+        fields.append(u.id.label("main_id"))
+    if True:
+        fields.append(label(element=u.username,name="user_name"))
+
+    fields.append(func.concat(u.first_name, ' ', u.last_name).label("full_name"))
+    q = select(*fields).select_from(u).where(u.id == user_id)
     results = db.execute(
-        select(u).where(u.id == user_id)
-    ).scalars().first()
+        q
+    ).mappings().first()
 
     if results is not None:
-        user = results
-        del user.password
-        if not user.is_staff:
-            del user.is_staff
-
-        return user
+        return results
     else:
         return JSONResponse({"detail": "record not found",
                              "is_succes" : False})
