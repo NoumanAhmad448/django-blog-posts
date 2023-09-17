@@ -25,25 +25,26 @@ def get_post_by_id(db: Session, post_id: int):
     try:
         p = aliased(Post)
         u = aliased(User)
+        # stmt  = select(func.count("*").label("total_count")).select_from(u).subquery()
+        # stmt = aliased(u,stmt)
+
+        q =  select(p,u).select_from(p).outerjoin(u).where(and_(p.id == post_id,p.should_display == 1)).order_by(p.id)
+
         if settings.NOT_PRO_LESS:
             results = db.scalar(
                 select(p).join(p.user_id.and_(u.is_active == True)).where(p.id == post_id)
             ).first()
         else:
             results = db.scalar(
-                select(p,u)
-                .join(User)
-                .where(and_(p.id == post_id,p.should_display == 1))
-                .order_by(p.id)
+               q
             )
 
-        stmt  = select(func.count("*").label("total_count")).select_from(u)
-        total_count = db.scalar(stmt)
+        # total_count = db.scalar(stmt)
 
+        if settings.DEBUG:
+            results.query = str(q)
         if results is not None:
-            if settings.DEBUG:
-                pass
-            results.total_count = total_count
+            # results.total_count = total_count
             return results
         else:
             return JSONResponse({"detail": "record not found",
@@ -79,3 +80,30 @@ def get_has_post_users(db: Session,default_post: int):
     else:
         return JSONResponse({"detail": "record not found",
         "is_succes" : False}, status_code=status.HTTP_200_OK)
+
+def get_users_without_posts(db: Session,default_post: int):
+    u = aliased(User)
+    p = aliased(Post)
+
+    subq = (
+     select(func.count(p.id))
+        .where(u.id == p.user_id)
+        .group_by(p.user_id)
+        .having(func.count(p.user_id) > default_post)
+     ).exists()
+
+
+    q = [u.id]
+    if True:
+        q.append(u.email)
+
+    if True:
+        q.append(u.username)
+
+    results= db.execute(select(*q).select_from(u).where(~subq)).mappings().all()
+    if len(results) > 0:
+        return results
+    else:
+        return JSONResponse({"detail": "record not found",
+        "is_succes" : False}, status_code=status.HTTP_200_OK)
+

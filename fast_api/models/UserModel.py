@@ -1,7 +1,8 @@
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, select
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, select,label,func,update,literal_column,bindparam
 from db import Base
 from sqlalchemy.orm import Session,aliased
 from fastapi.responses import JSONResponse
+import settings
 class User(Base):
     __tablename__ = "auth_user"
 
@@ -21,17 +22,65 @@ class User(Base):
 
 def get_user_by_userid(db: Session, user_id: int):
     u = aliased(User)
+    fields = [u.first_name,u.last_name.label("family_name")]
+    if True:
+        fields.append(u.id.label("main_id"))
+    if True:
+        fields.append(label(element=u.username,name="user_name"))
+    fields.append(u.email)
+    fields.append(literal_column("''").label("q"))
+    fields.append(func.concat(u.first_name, ' ', u.last_name).label("full_name"))
+
+    q = select(*fields).select_from(u).where(u.id == user_id).order_by(u.id.desc())
+
     results = db.execute(
-        select(u).where(u.id == user_id)
-    ).scalars().first()
+        q
+    ).mappings().first()
+    result = {}
+    if settings.DEBUG:
+        result["query"] = str(q)
 
     if results is not None:
-        user = results
-        del user.password
-        if not user.is_staff:
-            del user.is_staff
-
-        return user
+        result['results'] = results
+        return result
     else:
         return JSONResponse({"detail": "record not found",
                              "is_succes" : False})
+
+def update_user_by_userid(db: Session, user):
+    u = aliased(User)
+    q = select(u.id,u.last_name).select_from(u).where(u.username == user.username)
+    results = db.execute(q).mappings().first()
+
+    if results is not None:
+        values= {"id" : results.id, "user_id": results.id}
+        if user.email is not None:
+            values['email'] = user.email
+        if user.first_name is not None:
+            values['first_name'] = user.first_name
+
+        if user.last_name is not None:
+            values['last_name'] = user.last_name
+        else:
+            values['last_name'] = results.last_name
+        # return {"update" : values }
+        if len(values) > 0:
+            # this condition is set to false to test custom needs
+            if False:
+                update_user_q = update(u).where(u.id== results.id).values(**values)
+            update_user_q = update(u).where(u.id == bindparam("user_id")).values(
+                            email=bindparam("email"),
+                            first_name=bindparam("first_name"), last_name=bindparam("last_name")).execution_options(
+                            synchronize_session=None)
+            db.execute(update_user_q, [
+                values]
+                )
+            db.commit()
+            return JSONResponse({"is_success" : True, "query" : str(update_user_q), "results" : results.id})
+        else:
+            return JSONResponse({"detail": "no parameter is provided to update the record",
+                             "is_success" : False})
+    else:
+        return JSONResponse({"detail": "record not found",
+                             "is_success" : False})
+
