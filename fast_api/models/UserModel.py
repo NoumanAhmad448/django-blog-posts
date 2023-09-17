@@ -27,9 +27,12 @@ def get_user_by_userid(db: Session, user_id: int):
         fields.append(u.id.label("main_id"))
     if True:
         fields.append(label(element=u.username,name="user_name"))
+    fields.append(u.email)
     fields.append(literal_column("''").label("q"))
     fields.append(func.concat(u.first_name, ' ', u.last_name).label("full_name"))
+
     q = select(*fields).select_from(u).where(u.id == user_id).order_by(u.id.desc())
+
     results = db.execute(
         q
     ).mappings().first()
@@ -53,11 +56,17 @@ def update_user_by_userid(db: Session, user):
         values= {}
         if user.email is not None:
             values['email'] = user.email
+        if user.first_name is not None:
+            values['first_name'] = user.first_name
+        if user.last_name is not None:
+            values['last_name'] = user.last_name
+
         if len(values) > 0:
-            update_user_q = update(u).where(u.username==user.username).values(**values)
+            update_user_q = update(u).where(u.id== results.id).values(**values)
             try:
                 db.execute(update_user_q)
-                return JSONResponse({"is_success" : True})
+                db.commit()
+                return JSONResponse({"is_success" : True, "query" : str(update_user_q), "results" : results.id})
             except:
                 return JSONResponse({"detail": "something went wrong",
                              "is_success" : False})
