@@ -1,10 +1,12 @@
 from fastapi import FastAPI,Depends
-from models.UserModel import get_user_by_userid
+from models.UserModel import get_user_by_userid,update_user_by_userid
 from models.PostModel import  get_post_by_id,get_has_post_users,get_users_without_posts
 from constants import Constant
 from db import get_db
 from sqlalchemy.orm import Session
 from exception_handlers import unhandled_exception_handler
+from request import UserRequest
+
 app = FastAPI()
 
 app.add_exception_handler(Exception, unhandled_exception_handler)
@@ -29,3 +31,8 @@ def root(default_post: int=1,db : Session = Depends(get_db)):
 @app.get("{}get_users_without_posts".format(Constant.API_V1))
 def root(default_post: int=0,db : Session = Depends(get_db)):
     return get_users_without_posts(default_post=default_post,db=db)
+
+@app.post("{}update_user_by_userid".format(Constant.API_V1))
+def root(user : UserRequest,db : Session = Depends(get_db)):
+    return update_user_by_userid(user=user,db=db)
+

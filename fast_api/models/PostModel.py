@@ -25,25 +25,26 @@ def get_post_by_id(db: Session, post_id: int):
     try:
         p = aliased(Post)
         u = aliased(User)
+        # stmt  = select(func.count("*").label("total_count")).select_from(u).subquery()
+        # stmt = aliased(u,stmt)
+
+        q =  select(p,u).select_from(p).outerjoin(u).where(and_(p.id == post_id,p.should_display == 1)).order_by(p.id)
+
         if settings.NOT_PRO_LESS:
             results = db.scalar(
                 select(p).join(p.user_id.and_(u.is_active == True)).where(p.id == post_id)
             ).first()
         else:
             results = db.scalar(
-                select(p,u)
-                .join(u)
-                .where(and_(p.id == post_id,p.should_display == 1))
-                .order_by(p.id)
+               q
             )
 
-        stmt  = select(func.count("*").label("total_count")).select_from(u)
-        total_count = db.scalar(stmt)
+        # total_count = db.scalar(stmt)
 
+        if settings.DEBUG:
+            results.query = str(q)
         if results is not None:
-            if settings.DEBUG:
-                pass
-            results.total_count = total_count
+            # results.total_count = total_count
             return results
         else:
             return JSONResponse({"detail": "record not found",
