@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, select,label,func,update,literal_column
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, select,label,func,update,literal_column,bindparam
 from db import Base
 from sqlalchemy.orm import Session,aliased
 from fastapi.responses import JSONResponse
@@ -49,27 +49,34 @@ def get_user_by_userid(db: Session, user_id: int):
 
 def update_user_by_userid(db: Session, user):
     u = aliased(User)
-    q = select(u.id).select_from(u).where(u.username == user.username)
+    q = select(u.id,u.last_name).select_from(u).where(u.username == user.username)
     results = db.execute(q).mappings().first()
 
     if results is not None:
-        values= {}
+        values= {"id" : results.id, "user_id": results.id}
         if user.email is not None:
             values['email'] = user.email
         if user.first_name is not None:
             values['first_name'] = user.first_name
+
         if user.last_name is not None:
             values['last_name'] = user.last_name
-
+        else:
+            values['last_name'] = results.last_name
+        # return {"update" : values }
         if len(values) > 0:
-            update_user_q = update(u).where(u.id== results.id).values(**values)
-            try:
-                db.execute(update_user_q)
-                db.commit()
-                return JSONResponse({"is_success" : True, "query" : str(update_user_q), "results" : results.id})
-            except:
-                return JSONResponse({"detail": "something went wrong",
-                             "is_success" : False})
+            # this condition is set to false to test custom needs
+            if False:
+                update_user_q = update(u).where(u.id== results.id).values(**values)
+            update_user_q = update(u).where(u.id == bindparam("user_id")).values(
+                            email=bindparam("email"),
+                            first_name=bindparam("first_name"), last_name=bindparam("last_name")).execution_options(
+                            synchronize_session=None)
+            db.execute(update_user_q, [
+                values]
+                )
+            db.commit()
+            return JSONResponse({"is_success" : True, "query" : str(update_user_q), "results" : results.id})
         else:
             return JSONResponse({"detail": "no parameter is provided to update the record",
                              "is_success" : False})
