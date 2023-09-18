@@ -1,11 +1,11 @@
 from fastapi import FastAPI,Depends
 from models.UserModel import get_user_by_userid,update_user_by_userid
-from models.PostModel import  get_post_by_id,get_has_post_users,get_users_without_posts
+from models.PostModel import  get_post_by_id,get_has_post_users,get_users_without_posts,insert_post
 from constants import Constant
 from db import get_db
 from sqlalchemy.orm import Session
 from exception_handlers import unhandled_exception_handler
-from request import UserRequest
+from request import UserRequest,PostInsertRequest
 
 app = FastAPI()
 
@@ -36,3 +36,6 @@ def root(default_post: int=0,db : Session = Depends(get_db)):
 def root(user : UserRequest,db : Session = Depends(get_db)):
     return update_user_by_userid(user=user,db=db)
 
+@app.post("{}insert_post".format(Constant.API_V1))
+def root(post : PostInsertRequest,  db : Session = Depends(get_db)):
+    return insert_post(post=post,db=db)
