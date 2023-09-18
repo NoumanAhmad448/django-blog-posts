@@ -14,6 +14,7 @@ class User(Base):
     first_name = Column(String(150))
     last_name = Column(String(150))
     is_staff = Column(Boolean, nullable=True)
+    is_superuser = Column(Boolean, nullable=True)
     is_active = Column(Boolean, nullable=True)
     date_joined = Column(DateTime)
 
@@ -30,6 +31,8 @@ def get_user_by_userid(db: Session, user_id: int):
     fields.append(u.email)
     fields.append(literal_column("''").label("q"))
     fields.append(func.concat(u.first_name, ' ', u.last_name).label("full_name"))
+    fields.append(u.is_staff)
+    fields.append(u.is_superuser)
 
     q = select(*fields).select_from(u).where(u.id == user_id).order_by(u.id.desc())
 
@@ -39,13 +42,12 @@ def get_user_by_userid(db: Session, user_id: int):
     result = {}
     if settings.DEBUG:
         result["query"] = str(q)
-
     if results is not None:
         result['results'] = results
         return result
     else:
-        return JSONResponse({"detail": "record not found",
-                             "is_succes" : False})
+        return JSONResponse({"detail": "user not found",
+                             "is_success" : False})
 
 def update_user_by_userid(db: Session, user):
     u = aliased(User)
