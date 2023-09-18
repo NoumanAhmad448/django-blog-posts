@@ -21,7 +21,10 @@ class User(Base):
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
 
-def get_user_by_userid(db: Session, user_id: int):
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+def get_user_by_userid(db: Session, user_id: int,return_dict=False):
     u = aliased(User)
     fields = [u.first_name,u.last_name.label("family_name")]
     if True:
@@ -43,7 +46,10 @@ def get_user_by_userid(db: Session, user_id: int):
     if settings.DEBUG:
         result["query"] = str(q)
     if results is not None:
-        result['results'] = results
+        if return_dict:
+            result['results'] = dict(results.items())
+        else:
+            result['results'] = results
         return result
     else:
         return JSONResponse({"detail": "user not found",

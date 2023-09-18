@@ -8,7 +8,7 @@ DB_URL = settings.DATABASE_URL
 engine = create_engine(
     DB_URL, echo= True if settings.DEBUG else ""
 )
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 
 Base = declarative_base()
 

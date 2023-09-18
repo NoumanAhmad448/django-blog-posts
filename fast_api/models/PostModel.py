@@ -17,7 +17,7 @@ class Post(Base):
     tags:Mapped[str] = mapped_column(String(500))
     descrip :Mapped[str] = mapped_column(String(10000))
     should_display :Mapped[bool] = mapped_column(Boolean)
-    created_at :Mapped[DateTime] = mapped_column(DateTime)
+    created_at :Mapped[DateTime] = mapped_column(DateTime, default=datetime.now())
     updated_at :Mapped[DateTime] = mapped_column(DateTime)
     user_id :Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
     user :Mapped[User] = relationship(User)
@@ -113,12 +113,12 @@ def insert_post(db: Session, post:PostInsertRequest):
     p = aliased(Post)
     q = insert(p)
 
-    user = get_user_by_userid(db=db,user_id=post.user_id)
+    user = get_user_by_userid(db=db,user_id=post.user_id,return_dict=True)
 
     if not isinstance(user,JSONResponse):
         user = user["results"]
         is_staff = user["is_staff"] or user["is_superuser"]
-        values= {"created_at": datetime.now(), "should_display": is_staff}
+        values= {"should_display": is_staff}
         if post.source is not None:
             values['source'] = post.source
         if post.title is not None:
@@ -131,17 +131,18 @@ def insert_post(db: Session, post:PostInsertRequest):
             values['descrip'] = post.descrip
 
         if post.user_id is not None:
-            values['user_id'] = post.user_id
-
-        total_posts = db.execute(select(func.count("*").label("total_posts")).select_from(p)).mappings().first()
-        new_id = total_posts.total_posts+1
-        values['id'] = new_id
+            values['user_id'] = user["main_id"]
         if len(values) > 0:
-            db.execute(q.values(**values)
-                )
+            # db.execute(q.values(**values)
+            #     )
+            data= values
+            p = Post(**values)
+            db.add(p)
             db.commit()
-            return JSONResponse({"is_success" : True, "query" : str(q), "id" : new_id,
-                                 "data": values})
+            db.refresh(p)
+            data["user"] = user
+            return JSONResponse({"is_success" : True, "query" : str(q), "id" : p.id,
+                                 "data": data})
 
         else:
             return JSONResponse({"detail": "no parameter is provided to update the record",

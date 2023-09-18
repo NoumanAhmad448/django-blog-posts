@@ -23,3 +23,8 @@ class PostInsertRequest(BaseModel):
             raise ValueError("source must be api or web")
         return v
 
+    class Config:
+        error_msg_templates = {
+            'string_too_short.title': 'post title must be atleast 5 character',
+        }
+
