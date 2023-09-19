@@ -1,0 +1,1 @@
+Please refer to [postman collections](/fast_api/fast-apis.postman_collection.json) for api preview
