@@ -45,20 +45,23 @@ def create_token(request):
         current_user = authenticate(username=email, password=password)
 
         if current_user is not None:
-            user = User.objects.filter(email=email)
-            user_serializer = CustomUserSerializer(user, many=True)
+            user = User.objects.filter(email=email).first()
+            user_serializer = CustomUserSerializer(user)
+            if user_serializer.data is not None:
+                response["is_success"] = True
+                response["data"] = user_serializer.data
 
-            response["is_success"] = True
-            response["data"] = user_serializer.data[0]
+                token = Token.objects.filter(user_id=user_serializer.data["id"]).first()
+                if token is not None:
+                    response["token"] = token.__str__()
+                else:
+                    token = Token.objects.create(user=current_user)
+                    response["token"] = token.__str__()
 
-            token = Token.objects.filter(user_id=user_serializer.data[0]["id"]).first()
-            if token is not None:
-                response["token"] = token.__str__()
+                return JsonResponse(response, status=http_status.HTTP_200_OK)
             else:
-                token = Token.objects.create(user=current_user)
-                response["token"] = token.__str__()
-
-            return JsonResponse(response, status=200)
+                response["message"] = "seriizer did not return antyhing"
+                return JsonResponse(response, status=http_status.HTTP_400_BAD_REQUEST)
         else:
             response["message"] = "User credentials are wrong"
             return JsonResponse(response, status=400)
