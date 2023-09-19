@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "034d75d5-c0fb-433a-921d-a41640c9b1e6",
+		"name": "fast-apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14838074"
+	},
+	"item": [
+		{
+			"name": "single-user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/{{api}}/user/1"
+			},
+			"response": []
+		},
+		{
+			"name": "get-post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/{{api}}/get_post/3"
+			},
+			"response": []
+		},
+		{
+			"name": "get_has_post_users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{api}}/get_has_post_users?default_post=1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"get_has_post_users"
+					],
+					"query": [
+						{
+							"key": "default_post",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_users_without_posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{api}}/get_users_without_posts?default_post=0",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{api}}",
+						"get_users_without_posts"
+					],
+					"query": [
+						{
+							"key": "default_post",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_user_by_userid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"username\" : \"test_user\",\r\n        \"email\" : \"test1@test.com\",\r\n        \"first_name\" : \"dongbie\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/{{api}}/update_user_by_userid"
+			},
+			"response": []
+		},
+		{
+			"name": "insert_post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"source\": \"api\",\r\n    \"title\": \"hello world\",\r\n    \"tags\": \"t1,t2,3t,33\",\r\n    \"descrip\": \"lorem ipsum lorem ipsum\",\r\n    \"user_id\": 1\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/{{api}}/insert_post"
+			},
+			"response": []
+		}
+	]
+}

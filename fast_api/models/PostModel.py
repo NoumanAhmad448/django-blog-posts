@@ -1,19 +1,35 @@
-from sqlalchemy import Boolean, insert, DateTime, Integer, String, select, ForeignKey,func,and_,Column
-from db import Base
-from sqlalchemy.orm import Session,Mapped,relationship,aliased,mapped_column,selectin_polymorphic
+from sqlalchemy import Boolean, insert, DateTime, Integer, String, select, ForeignKey,func,and_,Column,String
+from sqlalchemy.orm import Session,Mapped,relationship,aliased,mapped_column,registry,DeclarativeBase
+import enum
+from typing_extensions import Annotated
 from fastapi.responses import JSONResponse
 from fastapi import status
 from models.UserModel import User,get_user_by_userid
 import settings
 from request import PostInsertRequest
 from datetime import datetime
+from typing import Literal
 
-class Post(Base):
+PostCustomStatus = Literal["web","api"]
+str_100 = Annotated[str, 100]
+class PostSource(enum.Enum):
+    api = "api"
+    web = "web"
+
+class DBBase(DeclarativeBase):
+    registry = registry(
+        type_annotation_map={
+            str_100: String(100),
+        }
+    )
+class Post(DBBase):
     __tablename__ = "create_posts"
+    __table_args__ = {"mysql_engine": "InnoDB"}
 
     id :Mapped[int] = Column(Integer, primary_key=True, index=True, autoincrement=True, unique=True,nullable=False)
-    source :Mapped[str] = mapped_column(String(100))
-    title :Mapped[str] = mapped_column(String(500))
+    # source :Mapped[PostSource]
+    source :Mapped[PostCustomStatus]
+    title :Mapped[str_100]
     tags:Mapped[str] = mapped_column(String(500))
     descrip :Mapped[str] = mapped_column(String(10000))
     should_display :Mapped[bool] = mapped_column(Boolean)
@@ -24,38 +40,41 @@ class Post(Base):
 
 
 def get_post_by_id(db: Session, post_id: int):
-    try:
-        p = aliased(Post)
-        u = aliased(User)
-        # stmt  = select(func.count("*").label("total_count")).select_from(u).subquery()
-        # stmt = aliased(u,stmt)
+    # try:
+    p = aliased(Post)
+    u = aliased(User)
+    # stmt  = select(func.count("*").label("total_count")).select_from(u).subquery()
+    # stmt = aliased(u,stmt)
 
-        q =  select(p,u).select_from(p).outerjoin(u).where(and_(p.id == post_id,p.should_display == 1)).order_by(p.id)
+    q =  select(p,u).select_from(p).outerjoin(u).where(and_(p.id == post_id)).order_by(p.id)
 
-        if settings.NOT_PRO_LESS:
-            results = db.scalar(
-                select(p).join(p.user_id.and_(u.is_active == True)).where(p.id == post_id)
-            ).first()
-        else:
-            results = db.scalar(
-               q
-            )
+    if settings.NOT_PRO_LESS:
+        results = db.scalar(
+            select(p).join(p.user_id.and_(u.is_active == True)).where(p.id == post_id)
+        ).first()
+    else:
+        results = db.scalar(
+            q
+        )
 
-        # total_count = db.scalar(stmt)
+    # total_count = db.scalar(stmt)
 
+    if results is not None:
+        # results.total_count = total_count
         if settings.DEBUG:
             results.query = str(q)
-        if results is not None:
-            # results.total_count = total_count
-            return results
-        else:
-            return JSONResponse({"detail": "record not found",
-                                "is_succes" : False}, status_code=status.HTTP_400_BAD_REQUEST)
-    except:
-        return JSONResponse({"detail": "something went wrong",
-                "is_succes" : False
-            },status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        if not results.should_display:
+            return JSONResponse({"detail": "record is found but cannot be displayed",
+                            "is_success" : False}, status_code=status.HTTP_400_BAD_REQUEST)
+        return results
+    else:
+        return JSONResponse({"detail": "record not found",
+                            "is_success" : False}, status_code=status.HTTP_400_BAD_REQUEST)
+    # except:
+    #     return JSONResponse({"detail": "something went wrong",
+    #             "is_succes" : False
+    #         },status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+    #         )
 
 def get_has_post_users(db: Session,default_post: int):
     u = aliased(User)
