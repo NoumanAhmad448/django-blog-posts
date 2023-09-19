@@ -73,6 +73,9 @@ For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-c
 4. ```Postman collection has been made online for public use```
 5. django custom template tags and filter
 6. Serializer, form validation have been implemented
+7. ``` Postgre support is included. You need to change the credentials in settings.py ```
+8. we have set postgre database as default database. if you are curious to change it to mysql. change replace default1 key with default in
+settings.py
 
 ## Deployment
 To deploy using Nginx and uwsgi, please refer to following [link](/deployment.md)
