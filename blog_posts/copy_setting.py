@@ -91,17 +91,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blog_posts.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
      "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env.get("DEFAULT_DATABASE_NAME"),
+        "USER": env.get("DEFAULT_DATABASE_USERNAME"),
+        "PASSWORD": env.get("DEFAULT_DATABASE_PASSWORD"),
+        "HOST": env.get("DEFAULT_DATABASE_HOST"),
+        "PORT": env.get("DEFAULT_DATABASE_PORT"),
+        "TEST": {
+            "NAME": env.get("DEFAULT_TEST_DATABASE_NAME")
+        },
+     },
+     "default01": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("DEFAULT_DATABASE_NAME"),
-        "USER": os.environ.get("DEFAULT_DATABASE_USERNAME"),
-        "PASSWORD": os.environ.get("DEFAULT_DATABASE_PASSWORD"),
-        "HOST": os.environ.get("DEFAULT_DATABASE_HOST"),
-        "PORT": os.environ.get("DEFAULT_DATABASE_PORT"),
+        "NAME": env.get("DEFAULT_DATABASE_NAME"),
+        "USER": env.get("DEFAULT_DATABASE_USERNAME"),
+        "PASSWORD": env.get("DEFAULT_DATABASE_PASSWORD"),
+        "HOST": env.get("DEFAULT_DATABASE_HOST"),
+        "PORT": env.get("DEFAULT_DATABASE_PORT"),
+        "TEST": {
+            "NAME": env.get("DEFAULT_TEST_DATABASE_NAME")
+        },
     },
      "live": {
         "ENGINE": "django.db.backends.mysql",
@@ -112,7 +123,6 @@ DATABASES = {
         "PORT": "3306",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

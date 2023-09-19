@@ -14,7 +14,7 @@
                 <p class="card-text">{{ post.descrip | slice:":100" }}</p>
             </div>
             <div class="card-footer">
-                <a href="{% url 'current_post' post_id=post.id %}" class="btn btn-primary btn_rounded"> {% translate "Read More" %}</a>
+                <a href="{% url 'blog:current_post' post_id=post.id %}" class="btn btn-primary btn_rounded"> {% translate "Read More" %}</a>
             </div>
         </div>
     </div>

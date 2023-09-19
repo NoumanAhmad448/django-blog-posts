@@ -46,12 +46,12 @@ def create_post(request):
             if False:
                 return redirect(reverse("current_post", args=(response[api_response.DATA]["post_id"],)))
             else:
-                return redirect(reverse("create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip(),
+                return redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip(),
                                 {"data" : response[api_response.DATA]})
         else:
             if "id" in response[api_response.DATA] and response[api_response.DATA]["id"] is not None:
                 request.session["errors"] = response[api_response.MESSAGE]
-                return  redirect(reverse("create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip())
+                return  redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip())
             else:
                 return render(request, Words.create_post_url, {"errors": response[api_response.MESSAGE]})
 
@@ -96,7 +96,7 @@ def bookmark_post(request):
             bookmark_post.save()
         else:
             bookmark_post.update()
-        return redirect(reverse("bookmark_post"))
+        return redirect(reverse("blog:bookmark_post"))
 
 @login_required(login_url="/login")
 def unbookmark_post(request):
@@ -105,4 +105,4 @@ def unbookmark_post(request):
         print(post_id)
         post = get_object_or_404(CreatePostModel.objects.filter(id=post_id))
         BookmarkPostModel.objects.filter(user=request.user.id,post=post.id).delete()
-        return redirect(reverse("current_post", kwargs={"post_id":post.id}))
+        return redirect(reverse("blog:current_post", kwargs={"post_id":post.id}))
