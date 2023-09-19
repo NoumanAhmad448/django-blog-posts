@@ -11,7 +11,7 @@
     {% endif %}
 
     {% if post_id and post_id is not None %}
-      <a href="{% url 'current_post' post_id=post_id %}" class="float-right btn btn-outline-primary">{% translate "View Post" %}
+      <a href="{% url 'blog:current_post' post_id=post_id %}" class="float-right btn btn-outline-primary">{% translate "View Post" %}
       </a>
     {% endif %}
     <div class="col d-flex justify-content-center mt-sm-3 mt-md-5">
@@ -20,7 +20,7 @@
             <div class="text-center">{% if data and data is not None %} {% translate "Update Post" %} {% else %} {% translate "Create Post" %} {% endif %}</div>
           </div>
           <div class="card-body">
-            <form method="post" action="{% url 'create-post' %}">
+            <form method="post" action="{% url 'blog:create-post' %}">
               {% csrf_token %}
               {% if errors and errors is not None %}
                 <div class="text-danger list-unstyled">

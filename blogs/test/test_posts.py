@@ -38,7 +38,7 @@ class CreatePostModelTestCase(TestCase):
         self.assertEqual(resp.status_code,http_status.HTTP_200_OK)
 
     def test_create_posts(self):
-        resp = self.client.get(reverse("create-post"))
+        resp = self.client.get(reverse("blog:create-post"))
         self.assertEqual(resp.status_code,http_status.HTTP_302_FOUND)
-        self.assertRedirects(resp,expected_url=reverse("login_user")+"?next="+reverse("create-post"))
+        self.assertRedirects(resp,expected_url=reverse("login_user")+"?next="+reverse("blog:create-post"))
 
