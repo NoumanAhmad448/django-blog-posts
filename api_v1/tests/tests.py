@@ -8,7 +8,9 @@ from django.contrib.auth.models import User
 from api_v1.generic_funs import ApiResponse
 from api_v1.models.create_post_model import CreatePostModel
 from  TestCase import TestCase
+from django.test import tag
 
+@tag("fast")
 class APIV1TestCase(TestCase):
     def setUp(self):
         super().setUp(is_sup_user_login=True)
@@ -42,6 +44,7 @@ class APIV1TestCase(TestCase):
         id = ac_resp[api_resp.DATA][post_model.ID]
         self.post_ob[post_model.ID] = id
         resp = self.client.post(reverse("create_post"),self.post_ob)
+
         ac_resp = json.loads(resp.content.decode())
 
         self.assertEqual(resp.status_code, http_status.HTTP_200_OK)

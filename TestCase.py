@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core import mail
 
 class TestCase(TestCase):
     def setUp(self,is_sup_user_login=False):
@@ -31,3 +32,6 @@ class TestCase(TestCase):
             self.client.login(username=self.credentials["super_username"],password=self.credentials["password"])
         else:
             self.client.login(username=self.credentials["username"],password=self.credentials["password"])
+
+        # set email outbox empty
+        mail.outbox = []
