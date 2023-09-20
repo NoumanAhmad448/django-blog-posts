@@ -15,7 +15,7 @@ from django.conf import settings
 from .models.create_post_model import CreatePostModel
 from django.shortcuts import get_object_or_404
 from .serializers.create_post_serializer import PostSerializer
-
+from django.utils import timezone
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes((permissions.IsAuthenticatedOrReadOnly,))
@@ -119,8 +119,7 @@ def create_post(request):
             else:
                 create_post.should_display = 0
             if id is not None:
-                import datetime
-                create_post.updated_at = datetime.datetime.now()
+                create_post.updated_at = timezone.now()
 
             create_post.save()
 
