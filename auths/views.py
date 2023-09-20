@@ -84,6 +84,7 @@ def forgot_password(request):
 
     elif request.method == 'POST':
         form = UpdatePassForm(request.POST)
+        form.is_valid()
         if form.is_valid():
             new_password = form.cleaned_data["password"]
             c_password = form.cleaned_data["c_password"]
@@ -97,9 +98,9 @@ def forgot_password(request):
                     if settings.EMAIL_HOST_EXIST is not None :
                         html_content = render_to_string(Words.update_pass_temp,
                                                         {
-                                                            'username': f"{user.first_name} {user.last_name}",
-                                                            'website_url': settings.ALLOWED_HOSTS[0],
-                                                            'website_name': settings.WEBISTE_NAME
+                            'username': f"{user.first_name} {user.last_name}",
+                            'website_url': settings.ALLOWED_HOSTS[0],
+                            'website_name': settings.WEBISTE_NAME
                                                         }
                                                         )
                         send_mail(subject="PASSWORD HAS BEEN CHANGED", recipient_list=[user.email],

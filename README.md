@@ -110,6 +110,17 @@ pip list
 ```
  python manage.py test
 ```
+### Django Test cases
+
+1. to app specific test cases,Run
+```
+ python manage.py test auths
+```
+2. to tag specific test cases, run. Two tags are used in the project ```slow``` and ```fast```
+```
+ python manage.py test --tags=slow
+```
+
 ## mysql commands
 ```
 CREATE USER 'root2'@'localhost' IDENTIFIED BY 'root2';
