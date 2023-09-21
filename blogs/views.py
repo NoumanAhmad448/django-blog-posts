@@ -15,6 +15,8 @@ import datetime
 from django.views.decorators.cache import cache_page
 from dotenv import load_dotenv
 import os
+from django.contrib import messages
+
 load_dotenv()
 
 
@@ -39,15 +41,19 @@ def create_post(request):
         return render(request,Words.create_post_url, {"data": data, "errors": errors})
 
     elif request.method == 'POST':
+        print(messages.get_messages(request).__len__())
         response = create_post_api(request)
         response = json.loads(response.content)
         api_response = ApiResponse()
         if response[api_response.IS_SUCCESS]:
+            messages.info(request, "post has been created successfully")
+
             if False:
                 return redirect(reverse("current_post", args=(response[api_response.DATA]["post_id"],)))
             else:
                 return redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip(),
                                 {"data" : response[api_response.DATA]})
+
         else:
             if "id" in response[api_response.DATA] and response[api_response.DATA]["id"] is not None:
                 request.session["errors"] = response[api_response.MESSAGE]

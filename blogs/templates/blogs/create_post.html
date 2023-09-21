@@ -27,6 +27,13 @@
                     <div>{{ errors | safe}}</div>
                 </div>
               {% endif %}
+              {% if messages %}
+                  <ul class="">
+                      {% for message in messages %}
+                        <li{% if message.tags  %} class="{{ 'text-info' }}"{% endif %}>{{ message }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
               <div class="form-group">
                 <label for="email">{% translate "Post Title" %}</label>
                 <input  type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp"
