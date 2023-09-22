@@ -16,6 +16,10 @@ from .models.create_post_model import CreatePostModel
 from django.shortcuts import get_object_or_404
 from .serializers.create_post_serializer import PostSerializer
 from django.utils import timezone
+from django.core import serializers
+
+
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes((permissions.IsAuthenticatedOrReadOnly,))
@@ -45,13 +49,19 @@ def create_token(request):
         current_user = authenticate(username=email, password=password)
 
         if current_user is not None:
-            user = User.objects.filter(email=email).first()
-            user_serializer = CustomUserSerializer(user)
-            if user_serializer.data is not None:
+            user = User.objects.filter(email=email)
+            if False:
+                user_serializer = CustomUserSerializer(user)
+            else:
+                user_serializer = serializers.serialize("json",user,
+                                    fields=["first_name","email","username","is_staff"])
+            if user_serializer is not None:
                 response["is_success"] = True
-                response["data"] = user_serializer.data
-
-                token = Token.objects.filter(user_id=user_serializer.data["id"]).first()
+                import json
+                data = json.loads(user_serializer)
+                response["data"] = data[0]['fields'] if data is not None and len(data)>0 else "no data is found"
+                id = user.first().id
+                token = Token.objects.filter(user_id=id).first()
                 if token is not None:
                     response["token"] = token.__str__()
                 else:

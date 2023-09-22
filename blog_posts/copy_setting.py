@@ -22,7 +22,6 @@ env = os.environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -30,10 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-00@vnn_mc=xdwf2b=-rsv7p74a6$etdl(yixwawtd6ncngeom5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = json.loads(os.environ.get("ALLOWED_HOSTS"))
-
+ALLOWED_HOSTS = json.loads(env.get("ALLOWED_HOSTS"))
+WEBISTE_NAME="blog posts"
 
 # Application definition
 
@@ -48,8 +47,11 @@ INSTALLED_APPS = [
     'auths.apps.AuthsConfig',
     'api_v1.apps.ApiV1Config',
     'rest_framework',
-    'rest_framework.authtoken',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+    'rest_framework.authtoken'
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -91,6 +93,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blog_posts.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
 DATABASES = {
      "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -100,7 +105,9 @@ DATABASES = {
         "HOST": env.get("DEFAULT_DATABASE_HOST"),
         "PORT": env.get("DEFAULT_DATABASE_PORT"),
         "TEST": {
-            "NAME": env.get("DEFAULT_TEST_DATABASE_NAME")
+            "NAME": env.get("DEFAULT_TEST_DATABASE_NAME"),
+            "TEST_PASS": env.get("TEST_PASS"),
+            "TEST_EMAIL": env.get("TEST_EMAIL")
         },
      },
      "default01": {
@@ -123,6 +130,7 @@ DATABASES = {
         "PORT": "3306",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -175,6 +183,7 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
 
 LANGUAGES =[ ('en', _('English')),
     ('zh', _('Chinese'))]
@@ -218,7 +227,6 @@ CACHES = {
     }
 }
 
-
 # send email only if configuration is set
 EMAIL_HOST_EXIST=True #if this is not set to true email will not be fired
 EMAIL_HOST=env.get("EMAIL_HOST")
@@ -227,3 +235,8 @@ EMAIL_HOST_USER=env.get("EMAIL_HOST_USER")
 EMAIL_PORT=env.get("EMAIL_PORT")
 DEFAULT_FROM_EMAIL=env.get("DEFAULT_FROM_EMAIL")
 EMAIL_USE_TLS=True
+
+AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.ModelBackend"]
+
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_DOMAIN='localhost:8080'

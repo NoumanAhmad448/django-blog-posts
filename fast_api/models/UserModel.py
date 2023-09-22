@@ -24,6 +24,7 @@ class User(Base):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
 def get_user_by_userid(db: Session, user_id: int,return_dict=False):
     u = aliased(User)
     fields = [u.first_name,u.last_name.label("family_name")]
