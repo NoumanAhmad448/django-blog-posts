@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from django.contrib.sites.models import Site
 
 class CreatePostModel(models.Model):
     #  neither change the order of POST_CHOICES nor the first tuple
@@ -23,6 +24,7 @@ class CreatePostModel(models.Model):
     source = models.CharField(choices=POST_CHOICES,verbose_name=_("Post Source"), max_length=100)
     title = models.CharField(verbose_name=_("Post Title"),max_length=500)
     tags = models.CharField(verbose_name=_("Post Tags"),max_length=500)
+    site = models.ManyToManyField(Site)
     descrip = models.CharField(max_length=10000)
     should_display = models.BooleanField()
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)

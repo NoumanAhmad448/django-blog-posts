@@ -1,6 +1,7 @@
 from api_v1.models.create_post_model import BlogSitemap
 from django.contrib import sitemaps
 from django.urls import reverse
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
 
 class StaticViewSitemap(sitemaps.Sitemap):
     priority = 0.5
@@ -16,5 +17,6 @@ class StaticViewSitemap(sitemaps.Sitemap):
 
 sitemaps ={
     "blog": BlogSitemap(),
+    "flatpages": FlatPageSitemap,
     "static": StaticViewSitemap
 }

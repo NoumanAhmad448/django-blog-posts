@@ -41,7 +41,6 @@ def create_post(request):
         return render(request,Words.create_post_url, {"data": data, "errors": errors})
 
     elif request.method == 'POST':
-        print(messages.get_messages(request).__len__())
         response = create_post_api(request)
         response = json.loads(response.content)
         api_response = ApiResponse()
