@@ -17,6 +17,7 @@ from django.shortcuts import get_object_or_404
 from .serializers.create_post_serializer import PostSerializer
 from django.utils import timezone
 from django.core import serializers
+from django.contrib.sites.models import Site
 
 
 
@@ -132,6 +133,8 @@ def create_post(request):
                 create_post.updated_at = timezone.now()
 
             create_post.save()
+            create_post.site.add(Site.objects.get_current())
+            # create_post.save()
 
             if id and id is None:
                 api_resp.data[post_model.ID] = id

@@ -17,6 +17,8 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.core.paginator import Paginator
+from django.contrib.sites.shortcuts import get_current_site
+
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -45,7 +47,8 @@ def register_user(request):
 
 
 def current_posts(request):
-    posts = CreatePostModel.objects.filter(should_display=1).order_by("-created_at")
+    posts = CreatePostModel.objects.filter(should_display=1,
+                    site__id=get_current_site(request).id).order_by("-created_at")
     paginator = Paginator(posts, 25)  # Show 25 contacts per page.
 
     page_number = request.GET.get("page")
