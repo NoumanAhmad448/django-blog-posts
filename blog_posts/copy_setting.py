@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-00@vnn_mc=xdwf2b=-rsv7p74a6$etdl(yixwawtd6ncngeom5'
+SECRET_KEY = '+62!vb(g7$zte*go8t_&89(kf$y!h^3vpq2@7#a=mm@$@q0o#='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django.contrib.sitemaps',
     'django.contrib.sites',
+    'django.contrib.flatpages',
+    'django.contrib.redirects',
     'rest_framework.authtoken'
 ]
 SITE_ID = 1
@@ -63,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middlewares.LanguageTransMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'blog_posts.urls'
@@ -167,7 +170,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'assets/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -238,5 +241,7 @@ EMAIL_USE_TLS=True
 
 AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.ModelBackend"]
 
-# SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_DOMAIN='localhost:8080'
+

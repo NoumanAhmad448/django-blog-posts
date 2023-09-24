@@ -1,3 +1,4 @@
 blog_posts/settings.py
 .env
 debug.log
+server_deploy.sh
