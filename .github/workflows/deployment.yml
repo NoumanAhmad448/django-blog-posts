@@ -56,7 +56,7 @@ jobs:
 
       - name: copy settings.py and .env files
         run: |
-          cp copy_setting.py settings.py
+          cp blog_posts/copy_setting.py blog_posts/settings.py
           cp .env.backup .env
 
       - name: Install requirements
