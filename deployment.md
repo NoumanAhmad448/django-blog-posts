@@ -9,7 +9,7 @@ We need to setup the environment first. I am using ```Centos 7```
        ```
        wget https://www.sqlite.org/snapshot/sqlite-snapshot-202309111527.tar.gz
        ```
-    3.run
+    3. run
        ```
        tar zxvf sqlite-snapshot-202309111527.tar.gz
        ```
@@ -25,8 +25,14 @@ We need to setup the environment first. I am using ```Centos 7```
        ```
        cd Python-3.10.13
         ```
-    10. ./configure --enable-optimizations
-    11. make & sudo make altinstall
+    7. copy
+        ```
+            ./configure --enable-optimizations
+        ```
+    8. copy
+        ```
+         make & sudo make altinstall
+        ```
 
 2. create virtual env
     1. python3.10 -m venv /opt/python-venv/test-django3
@@ -123,13 +129,17 @@ We need to setup the environment first. I am using ```Centos 7```
    ```
 
 7. touch /etc/systemd/system/gunicorn.service:
-    i. install gunicorn using pip install gunicorn in virtualenv and copy
+    i. install gunicorn using
+    ```
+    pip install gunicorn
+    ```
+     in virtual env and copy
     ```
            [Unit]
         Description=gunicorn daemon
         Requires=test_django.socket #needs to be changed
         After=network.target
-        
+
         [Service]
         Type=notify
         # the specific user that our service will run as
@@ -140,38 +150,59 @@ We need to setup the environment first. I am using ```Centos 7```
         # see http://0pointer.net/blog/dynamic-users-with-systemd.html
         RuntimeDirectory=mysite
         WorkingDirectory= cd /home/usmansaleem234/public_html/test-django/mysite/mysite #project directory path that does not include                     # manage.py
-        ExecStart=/usr/bin/gunicorn mysite.wsgi:application #gunicorn path to be included 
-        # fetch gunicorn path using whereis gunicorn 
+        ExecStart=/usr/bin/gunicorn mysite.wsgi:application #gunicorn path to be included
+        # fetch gunicorn path using whereis gunicorn
         ExecReload=/bin/kill -s HUP $MAINPID
         KillMode=mixed
         TimeoutStopSec=5
         PrivateTmp=true
-        
+
         [Install]
         WantedBy=multi-user.target
    ```
-    ii. copy
+    ii. run
+    ```
+          touch /etc/systemd/system/test_django.socket
+    ```
+    ```
+          nano /etc/systemd/system/test_django.socket
+    ```
+     and copy
    ```
         [Socket]
         ListenStream=/run/test_django.sock
         # Our service won't need permissions for the socket, since it
         # inherits the file descriptor by socket activation
         # only the nginx daemon will need access to the socket
-        SocketUser=www-data
+        SocketUser=www-data #socket user
         # Optionally restrict the socket permissions even more.
         # SocketMode=600
-        
+
         [Install]
         WantedBy=sockets.target
    ```
 
 
-9. check if there is something wrong with .sock file
+9. [uwsgi] check if there is something wrong with .sock file
     ```
         uwsgi --socket /tmp/uwsgi/test_project.sock  --module test_project.wsgi --chmod-socket=664 --ini /etc/uwsgi/vassals/test_django.ini
     ```
 
-10. add user to nginx group
+10. [debugging] gunicorn
+    1. make sure socket has active status
+    ```
+        systemctl status test_django.socket
+    ```
+    2. make sure serivce has active status
+        ```
+        systemctl status test_django
+        ```
+    3. make sure you can hit django using gunicorn
+        ```
+            sudo -u user curl --unix-socket /run/gunicorn.sock http
+        ```
+
+11. add user to nginx group
     ```
         gpasswd -a django nginx
     ```
@@ -226,8 +257,20 @@ server {
 }
 ```
 
-12. nginx -t
-13. sudo nginx -s reload
-14. systemctl status nginx.service
-15. netstat -na|grep LISTEN | grep :81
+12. copy
+```
+nginx -t
+```
+13. run
+```
+sudo nginx -s reload
+```
+14. run
+```
+systemctl status nginx.service
+```
+15. run
+    ```
+    netstat -na|grep LISTEN | grep :81
+    ```
 

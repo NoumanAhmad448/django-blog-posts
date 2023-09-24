@@ -1,5 +1,5 @@
-conda activate django-blog-posts
+source /opt/python-venv/test-django3/bin/activate
 python -m pip install --upgrade pip
-# pip install -r requirements.txt
+pip install -r requirements.txt
 
-# python manage.py migrate
+python manage.py migrate
