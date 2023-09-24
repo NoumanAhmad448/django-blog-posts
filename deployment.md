@@ -5,22 +5,23 @@ We need to setup the environment first. I am using ```Centos 7```
        ```
         yum install build-essential python3-dev && sudo yum install -y epel openssl11-devel
         ```
-    3. run
+    2. run
        ```
        wget https://www.sqlite.org/snapshot/sqlite-snapshot-202309111527.tar.gz
        ```
-    4.run
+    3.run
        ```
        tar zxvf sqlite-snapshot-202309111527.tar.gz
        ```
-    6. use
+    4. use
        ```
         wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz
        ```
-    7. use
-       ```tar -xf Python-3.10.13.tgz
+    5. use
        ```
-    8. run
+       tar -xf Python-3.10.13.tgz
+       ```
+    6. run
        ```
        cd Python-3.10.13
         ```
