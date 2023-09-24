@@ -2,7 +2,7 @@ name: Deployment
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
 jobs:
   testing:
     runs-on: ubuntu-latest
@@ -33,10 +33,8 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Checkout code
-        uses: actions/checkout@v2
-    - name: Cache dependency # caching dependency will make our build faster.
+      - uses: actions/checkout@v3
+      - name: Cache dependency # caching dependency will make our build faster.
         uses: actions/cache@v2 # for more info checkout pip section documentation at https://github.com/actions/cache
         with:
           path: ~/.cache/pip
@@ -44,46 +42,45 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-    - name: Setup python environment
+      - name: Setup python environment
         uses: actions/setup-python@v2
         with:
-          python-version: '3.10'
-    - name: Check Python version
+          python-version: "3.10"
+      - name: Check Python version
         run: python --version
 
-    - name: Create Virtual Env
+      - name: Create Virtual Env
         run: |
           virtualenv test-django3
           source /opt/python-venv/test-django3/bin/activate
 
-    - name: copy settings.py and .env files
+      - name: copy settings.py and .env files
         run: |
           cp copy_setting.py settings.py
           cp .env.backup .env
 
-    - name: Install requirements
+      - name: Install requirements
         run: pip install -r requirements.txt
 
-    - name: Run Migrations
+      - name: Run Migrations
         run: python manage.py migrate
 
-    - name: Run Test
+      - name: Run Test
         run: python manage.py test
 
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.0.0
-      with:
-        server: ${{secrets.FTP_SERVER}}
-        username: ${{secrets.FTP_USERNAME}}
-        password: ${{secrets.FTP_PASS}}
-        server-dir: /
-        git-ftp-args: '--all'
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ${{secrets.FTP_SERVER}}
+          username: ${{secrets.FTP_USERNAME}}
+          password: ${{secrets.FTP_PASS}}
+          server-dir: /
+          git-ftp-args: "--all"
 
-
-    - name: Running Scripts
-      uses: appleboy/ssh-action@master
-      with:
-        username: ${{secrets.SSH_USERNAME}}
-        host: ${{secrets.SERVER_IP}}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: 'cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh'
+      - name: Running Scripts
+        uses: appleboy/ssh-action@master
+        with:
+          username: ${{secrets.SSH_USERNAME}}
+          host: ${{secrets.SERVER_IP}}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: "cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh"
