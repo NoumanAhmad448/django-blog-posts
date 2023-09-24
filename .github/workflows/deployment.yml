@@ -52,7 +52,6 @@ jobs:
       - name: installing pip virtualenv
         run: |
           pip3 install virtualenv
-          sudo /usr/bin/easy_install virtualenv
 
       - name: Create Virtual Env
         run: |
