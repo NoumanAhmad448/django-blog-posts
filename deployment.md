@@ -61,7 +61,7 @@ We need to setup the environment first. I am using ```Centos 7```
 
 
 4. chown -Rv django:nginx project_dir
-5. setup uwsgi
+5. setup uwsgi or gunicorn
     1. create
         ```
             touch /etc/uwsgi/vassals/test_project.ini && \
@@ -122,22 +122,66 @@ We need to setup the environment first. I am using ```Centos 7```
    systemctl restart uwsgi
    ```
 
-7. check if there is something wrong with .sock file
+7. touch /etc/systemd/system/gunicorn.service:
+    i. install gunicorn using pip install gunicorn in virtualenv and copy
+    ```
+           [Unit]
+        Description=gunicorn daemon
+        Requires=test_django.socket #needs to be changed
+        After=network.target
+        
+        [Service]
+        Type=notify
+        # the specific user that our service will run as
+        User=www-data #user who can access the .sock file in /run/.sock
+        #Group=someuser
+        # another option for an even more restricted service is
+        # DynamicUser=yes
+        # see http://0pointer.net/blog/dynamic-users-with-systemd.html
+        RuntimeDirectory=mysite
+        WorkingDirectory= cd /home/usmansaleem234/public_html/test-django/mysite/mysite #project directory path that does not include                     # manage.py
+        ExecStart=/usr/bin/gunicorn mysite.wsgi:application #gunicorn path to be included 
+        # fetch gunicorn path using whereis gunicorn 
+        ExecReload=/bin/kill -s HUP $MAINPID
+        KillMode=mixed
+        TimeoutStopSec=5
+        PrivateTmp=true
+        
+        [Install]
+        WantedBy=multi-user.target
+   ```
+    ii. copy
+   ```
+        [Socket]
+        ListenStream=/run/test_django.sock
+        # Our service won't need permissions for the socket, since it
+        # inherits the file descriptor by socket activation
+        # only the nginx daemon will need access to the socket
+        SocketUser=www-data
+        # Optionally restrict the socket permissions even more.
+        # SocketMode=600
+        
+        [Install]
+        WantedBy=sockets.target
+   ```
+
+
+9. check if there is something wrong with .sock file
     ```
         uwsgi --socket /tmp/uwsgi/test_project.sock  --module test_project.wsgi --chmod-socket=664 --ini /etc/uwsgi/vassals/test_django.ini
     ```
 
-8. add user to nginx group
+10. add user to nginx group
     ```
         gpasswd -a django nginx
     ```
-9. verify the .sock file
-10. install nginx
+11. verify the .sock file
+12. install nginx
 
-11.
+13.
  1. all server lives inside ```http directive``` in ```nano /etc/nginx/nginx.conf```
  2. create a file inside ```touch /etc/nginx/conf.d/test_project.conf``` All files are automatically imported in nginx.conf
- 3. 
+ 3. copy the sample
 ```
    upstream django {
     # server unix:///path/to/your/mysite/mysite.sock; # for a file socket
@@ -174,14 +218,16 @@ server {
 
         # Everything else to Django server
         location / {
-            uwsgi_pass unix:/tmp/uwsgi/test_project.sock;
+            #uwsgi_pass unix:/tmp/uwsgi/test_project.sock;
             #uwsgi_pass  django;
-            include uwsgi_params;
+            #include uwsgi_params;
+            proxy_pass http://unix:/run/test_django.sock;
         }
 }
 ```
 
-12. sudo nginx -s reload
-13. systemctl status nginx.service
-14. netstat -na|grep LISTEN | grep :81
+12. nginx -t
+13. sudo nginx -s reload
+14. systemctl status nginx.service
+15. netstat -na|grep LISTEN | grep :81
 
