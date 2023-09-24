@@ -1,8 +1,12 @@
 We need to setup the environment first. I am using ```Centos 7```
 
 1. install python
-    1. run ``` yum install build-essential python3-dev && sudo yum install -y epel openssl11-devel ```
-    2. ```
+    1. run
+       ```
+        yum install build-essential python3-dev && sudo yum install -y epel openssl11-devel
+        ```
+    3. run
+       ```
        wget https://www.sqlite.org/snapshot/sqlite-snapshot-202309111527.tar.gz
        ```
     4.run
