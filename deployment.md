@@ -2,16 +2,13 @@ We need to setup the environment first. I am using ```Centos 7```
 
 1. install python
     1. run ``` yum install build-essential python3-dev && sudo yum install -y epel openssl11-devel ```
-    2. wget https://www.sqlite.org/snapshot/sqlite-snapshot-202309111527.tar.gz
-        tar zxvf sqlite-snapshot-202309111527.tar.gz
-        ./configure
-        make
-        sudo make install
-    3. use ``` wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz ```
-    4. use ```tar -xf Python-3.10.13.tgz ```
+    2. ```wget https://www.sqlite.org/snapshot/sqlite-snapshot-202309111527.tar.gz```
+    3. ```tar zxvf sqlite-snapshot-202309111527.tar.gz```
+    4. use ``` wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz ```
+    5. use ```tar -xf Python-3.10.13.tgz ```
     4.``` cd Python-3.10.13 ```
-    5. ./configure --enable-optimizations
-    6. make & sudo make altinstall
+    6. ./configure --enable-optimizations
+    7. make & sudo make altinstall
 
 2. create virtual env
     1. python3.10 -m venv /opt/python-venv/test-django3
