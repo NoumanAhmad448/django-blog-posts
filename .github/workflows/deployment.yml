@@ -49,14 +49,10 @@ jobs:
       - name: Check Python version
         run: python --version
 
-      - name: installing pip virtualenv
-        run: |
-          pip3 install virtualenv
-
       - name: Create Virtual Env
         run: |
-          virtualenv test-django3
-          source /opt/python-venv/test-django3/bin/activate
+          python3 -m venv test-django3
+          source test-django3/bin/activate
 
       - name: copy settings.py and .env files
         run: |
