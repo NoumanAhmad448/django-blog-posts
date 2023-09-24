@@ -13,11 +13,19 @@ We need to setup the environment first. I am using ```Centos 7```
        ```
        tar zxvf sqlite-snapshot-202309111527.tar.gz
        ```
-    6. use ``` wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz ```
-    7. use ```tar -xf Python-3.10.13.tgz ```
-    4.``` cd Python-3.10.13 ```
-    8. ./configure --enable-optimizations
-    9. make & sudo make altinstall
+    6. use
+       ```
+        wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz
+       ```
+    7. use
+       ```tar -xf Python-3.10.13.tgz
+       ```
+    8. run
+       ```
+       cd Python-3.10.13
+        ```
+    10. ./configure --enable-optimizations
+    11. make & sudo make altinstall
 
 2. create virtual env
     1. python3.10 -m venv /opt/python-venv/test-django3
