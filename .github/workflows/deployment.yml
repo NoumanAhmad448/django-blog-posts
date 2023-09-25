@@ -70,7 +70,7 @@ jobs:
           server-dir: /
           git-ftp-args: "--all"
           exclude: |
-            **/test_django3/**
+            **/test-django3/**
 
       - name: Running Scripts
         uses: appleboy/ssh-action@master
