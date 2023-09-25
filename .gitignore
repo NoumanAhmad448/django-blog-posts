@@ -4,3 +4,6 @@ debug.log
 server_deploy.sh
 .server_debug
 .htaccess
+
+.env.live
+blog_posts/live_settings.py
