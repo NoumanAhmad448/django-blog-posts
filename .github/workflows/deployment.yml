@@ -68,7 +68,7 @@ jobs:
           username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASS}}
           server-dir: /
-          git-ftp-args: "--all"
+          #git-ftp-args: "--all"
 
       - name: Running Scripts
         uses: appleboy/ssh-action@master
@@ -76,4 +76,4 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           host: ${{secrets.SERVER_IP}}
           password: ${{ secrets.SSH_PASSWORD }}
-          #script: "cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh"
+          script: "cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh"
