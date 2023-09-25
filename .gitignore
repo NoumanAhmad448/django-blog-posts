@@ -3,3 +3,4 @@ blog_posts/settings.py
 debug.log
 server_deploy.sh
 .server_debug
+.htaccess

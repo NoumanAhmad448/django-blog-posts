@@ -254,6 +254,13 @@ server {
     server_name website_name www.website_name; # Name of server
     ssl_certificate     /etc/ssl/certs/server_name.crt;
     ssl_certificate_key /etc/ssl/certs/server_name.key;
+      # rewrite to remove www.
+        if ( $host ~ ^www\.(.+)$ ) {
+            set $without_www $1;
+            rewrite ^ $scheme://$without_www$uri permanent;
+        }
+    # redirect http to https
+    error_page 497 https://$server_name:$server_port$request_uri;
 
         client_max_body_size 64M;
 
@@ -305,3 +312,15 @@ systemctl status nginx.service
     netstat -na|grep LISTEN | grep :81
     ```
 
+
+
+### Additional information
+1. white list IPs
+Log into WHM as the 'root' user.
+Navigate to "Home / Plugins / ConfigServer Security & Firewall / Firewall Configuration."
+Click the "csf" tab.
+
+2. Enable SSL || https
+    1. Go to SSL/TLS and create key and crt
+    2. save it in /etc/ssl/certs
+    3. Go to nginx configuration stated above in ssl_certificate and update it
