@@ -67,7 +67,32 @@ We need to setup the environment first. I am using ```Centos 7```
 
 
 4. chown -Rv django:nginx project_dir
-5. setup uwsgi or gunicorn
+5. install postgre
+    1. follow guide from postgre officila site to install postgre.
+    2. common commands to setup database and create a user account
+       1. Enter
+    ```
+    sudo su postgres || psql
+    ```
+    2. pass change
+    ```
+    ALTER USER postgres WITH PASSWORD 'new_pass';
+    ```
+    3. list users and db
+    ```
+    \l
+    ```
+    4. permissions
+    ```
+    GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO wiki;
+    ```
+    ```
+    GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO wiki;
+    ```
+    ```
+     ALTER DATABASE test OWNER TO wiki;
+    ```
+6. setup uwsgi or gunicorn
     1. create
         ```
             touch /etc/uwsgi/vassals/test_project.ini && \
@@ -121,14 +146,14 @@ We need to setup the environment first. I am using ```Centos 7```
         logto = /var/log/uwsgi/test_project.log
     ```
 
-6. use the followings for debugging
+7. use the followings for debugging
     ```
    systemctl daemon-reload
    systemctl status uwsgi.service
    systemctl restart uwsgi
    ```
 
-7. touch /etc/systemd/system/gunicorn.service:
+8. touch /etc/systemd/system/gunicorn.service:
     i. install gunicorn using
     ```
     pip install gunicorn
@@ -184,6 +209,7 @@ We need to setup the environment first. I am using ```Centos 7```
 
 
 9. [uwsgi] check if there is something wrong with .sock file
+    1. test project
     ```
         uwsgi --socket /tmp/uwsgi/test_project.sock  --module test_project.wsgi --chmod-socket=664 --ini /etc/uwsgi/vassals/test_django.ini
     ```
@@ -201,6 +227,10 @@ We need to setup the environment first. I am using ```Centos 7```
         ```
             sudo -u user curl --unix-socket /run/gunicorn.sock http
         ```
+    4. enable service
+    ```
+        systemctl enable --now test_django.socket
+    ```
 
 11. add user to nginx group
     ```
@@ -209,7 +239,6 @@ We need to setup the environment first. I am using ```Centos 7```
 11. verify the .sock file
 12. install nginx
 
-13.
  1. all server lives inside ```http directive``` in ```nano /etc/nginx/nginx.conf```
  2. create a file inside ```touch /etc/nginx/conf.d/test_project.conf``` All files are automatically imported in nginx.conf
  3. copy the sample
@@ -220,9 +249,11 @@ We need to setup the environment first. I am using ```Centos 7```
 }
 
 server {
-    listen 81;
-     listen [::]:81;
+    listen 81 ssl;
+     listen [::]:81 ssl;
     server_name website_name www.website_name; # Name of server
+    ssl_certificate     /etc/ssl/certs/server_name.crt;
+    ssl_certificate_key /etc/ssl/certs/server_name.key;
 
         client_max_body_size 64M;
 
