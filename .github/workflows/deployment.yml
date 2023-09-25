@@ -71,6 +71,9 @@ jobs:
           git-ftp-args: "--all"
           exclude: |
             **/test-django3/**
+            **/.github/**
+            **/.git/**
+            
 
       - name: Running Scripts
         uses: appleboy/ssh-action@master
