@@ -76,4 +76,4 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           host: ${{secrets.SERVER_IP}}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: "cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh"
+          #script: "cd /home/usmansaleem234/public_html/test-django/blog_posts && chmod u+x ./server_deploy.sh && ./server_deploy.sh"
