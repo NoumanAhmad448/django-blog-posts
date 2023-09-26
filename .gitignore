@@ -3,6 +3,7 @@ blog_posts/settings.py
 debug.log
 server_deploy.sh
 .server_debug
+.server_uwsgi_debug
 .htaccess
 
 .env.live
