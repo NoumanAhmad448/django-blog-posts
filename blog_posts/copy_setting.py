@@ -209,7 +209,15 @@ LOGGING = {
             "level": "DEBUG",
             "class": "logging.FileHandler",
             "filename": "debug.log",
+            'formatter': 'verbose',
+            'mode': 'w',
         },
+        "mail_admins": {
+        "level": "ERROR",
+        "class": "django.utils.log.AdminEmailHandler",
+        "email_backend": "django.core.mail.backends.filebased.EmailBackend",
+        "include_html": True,
+    }
     },
     "loggers": {
         "django": {
@@ -219,6 +227,8 @@ LOGGING = {
         },
     },
 }
+
+ADMINS=[("Nouman Ahamd", "your_email@django-mail.com")]
 
 CACHES = {
     "default": {
