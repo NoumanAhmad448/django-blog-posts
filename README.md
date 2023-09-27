@@ -39,7 +39,7 @@ python manage.py migrate
 ```
 9. run
  ```
- python manage.py runserver
+ python manage.py runserver 0.0.0.0:8080
  ```
 
 # Auto Deployment using Github Actions

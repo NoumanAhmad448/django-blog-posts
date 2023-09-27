@@ -209,6 +209,7 @@ LOGGING = {
                 "level": "DEBUG",
                 "class": "logging.FileHandler",
                 "filename": "debug.log",
+                'mode': 'w',
             },
             "mail_admins": {
             "level": "ERROR",
