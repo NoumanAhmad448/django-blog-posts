@@ -88,6 +88,7 @@ Further Do not forget to check the swagger documentation by visiting the
 
 ** your_server/docs **
 ```
+For deployment of **Fast APi using gunicorn,uvicorn,hypervisor and nginx** Please refer to [this](fast_api_deployment.md)
 
 ## Common Commands
 ```
