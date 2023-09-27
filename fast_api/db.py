@@ -6,9 +6,15 @@ import settings
 
 DB_URL = settings.DATABASE_URL
 
-engine = create_engine(
-    DB_URL, echo= True if settings.DEBUG else ""
-)
+if settings.DEBUG:
+    engine = create_engine(
+        DB_URL, echo= True
+    )
+else:
+    engine = create_engine(
+        DB_URL
+    )
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 
 Base = declarative_base()

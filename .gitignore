@@ -8,3 +8,4 @@ server_deploy.sh
 
 .env.live
 blog_posts/live_settings.py
+fastapi.debug.server

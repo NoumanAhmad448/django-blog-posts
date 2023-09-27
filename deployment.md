@@ -175,7 +175,7 @@ We need to setup the environment first. I am using ```Centos 7```
         # see http://0pointer.net/blog/dynamic-users-with-systemd.html
         RuntimeDirectory=mysite
         WorkingDirectory= cd /home/usmansaleem234/public_html/test-django/mysite/mysite #project directory path that does not include                     # manage.py
-        ExecStart=/usr/bin/gunicorn mysite.wsgi:application #gunicorn path to be included
+        ExecStart=/opt/python-venv/test-django3/bin/gunicorn -b 0.0.0.0:8080 blog_posts.wsgi:application
         # fetch gunicorn path using whereis gunicorn
         ExecReload=/bin/kill -s HUP $MAINPID
         KillMode=mixed
