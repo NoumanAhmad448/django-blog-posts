@@ -205,19 +205,17 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": "debug.log",
-            'formatter': 'verbose',
-            'mode': 'w',
-        },
-        "mail_admins": {
-        "level": "ERROR",
-        "class": "django.utils.log.AdminEmailHandler",
-        "email_backend": "django.core.mail.backends.filebased.EmailBackend",
-        "include_html": True,
-    }
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": "debug.log",
+            },
+            "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "email_backend": "django.core.mail.backends.filebased.EmailBackend",
+            "include_html": True,
+        }
     },
     "loggers": {
         "django": {
