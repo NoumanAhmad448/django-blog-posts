@@ -1,3 +1,9 @@
 RewriteEngine On
 RewriteRule (.*) https://%{HTTP_HOST}:81%{REQUEST_URI} [R=301,L]
-RewriteCond %{HTTPS} off
+
+<If "%{HTTP_HOST} == 'django.lyskills.com'">
+    RewriteRule (.*) https://%{HTTP_HOST}:81%{REQUEST_URI} [R=301,L]
+</If>
+<If "%{HTTP_HOST} == 'test-django.lyskills.com'">
+    RewriteRule (.*) https://%{HTTP_HOST}:82%{REQUEST_URI} [R=301,L]
+</If>
