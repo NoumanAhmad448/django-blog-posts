@@ -201,6 +201,7 @@ LOCALE_PATHS = ( os.path.join(SITE_ROOT, 'locale'), )
 
 DATE_FORMAT="d F Y"
 
+# mode: w means that write mode. in need to append the logs in file use 'a' mode
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,

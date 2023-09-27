@@ -6,10 +6,12 @@ from db import get_db
 from sqlalchemy.orm import Session
 from exception_handlers import unhandled_exception_handler
 from request import UserRequest,PostInsertRequest
+import settings
 
 app = FastAPI()
 
-app.add_exception_handler(Exception, unhandled_exception_handler)
+if settings.DEBUG:
+    app.add_exception_handler(Exception, unhandled_exception_handler)
 
 @app.get(f"{Constant.API_V1}")
 async def root():

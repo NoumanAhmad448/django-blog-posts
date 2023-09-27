@@ -12,7 +12,7 @@
             "level": "DEBUG",
             "formatter": "verbose",
             "when": "D",
-            "backupCount": 0,
+            "backupCount": 3,
             "filename": "uvicorn.log"
         }
     },
