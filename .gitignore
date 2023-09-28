@@ -11,9 +11,17 @@ blog_posts/live_settings.py
 fastapi.debug.server
 __pycache__
 
+auths/__pycache__
+blogs/__pycache__
+api_v1/__pycache__
+
 auths/models/__pycache__
 blogs/models/__pycache__
 api_v1/models/__pycache__
+
+auths/serializers/__pycache__
+blogs/serializers/__pycache__
+api_v1/serializers/__pycache__
 
 auths/admin/__pycache__
 blogs/admin/__pycache__
@@ -22,3 +30,16 @@ api_v1/admin/__pycache__
 auths/migrations/__pycache__
 blogs/migrations/__pycache__
 api_v1/migrations/__pycache__
+
+keywords/__pycache__
+blogs/keywords/__pycache__
+
+funs/__pycache__
+
+api_v1/forms/__pycache__
+blogs/forms/__pycache__
+api_v1/forms/__pycache__
+
+blog_posts/__pycache__
+
+middlewares/__pycache__
