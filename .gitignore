@@ -18,3 +18,7 @@ api_v1/models/__pycache__
 auths/admin/__pycache__
 blogs/admin/__pycache__
 api_v1/admin/__pycache__
+
+auths/migrations/__pycache__
+blogs/migrations/__pycache__
+api_v1/migrations/__pycache__
