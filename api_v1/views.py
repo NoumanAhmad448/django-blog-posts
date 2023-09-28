@@ -18,7 +18,9 @@ from .serializers.create_post_serializer import PostSerializer
 from django.utils import timezone
 from django.core import serializers
 from django.contrib.sites.models import Site
-
+from funs.funs import get_client_ip
+from datetime import datetime
+import services
 
 
 @api_view(['GET'])
@@ -117,7 +119,17 @@ def create_post(request):
         if id and id is not None:
             create_post = CreatePostModel.objects.filter(id=id,user=user).first()
         else:
+            if services.enable_two_posts_day:
+                post_count = CreatePostModel.objects.filter(created_at__date=datetime.now().date(),user=user).count()
+                print(post_count)
+                if post_count>=2:
+                    api_resp.is_success = False
+                    api_resp.message=_("you are not allowed to send more than two post in one day")
+                    status = http_status.HTTP_400_BAD_REQUEST
+                    return JsonResponse(api_resp.send_response(), status=status, safe=False)
+
             create_post = CreatePostModel()
+
         if create_post:
             create_post.user=user
             create_post.source=create_post_form.cleaned_data[post_model.SOURCE]

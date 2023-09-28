@@ -18,7 +18,10 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.core.paginator import Paginator
 from django.contrib.sites.shortcuts import get_current_site
-
+from sys import exit
+from funs.funs import get_client_ip
+from datetime import datetime
+import services
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
@@ -35,11 +38,19 @@ def register_user(request):
             if User.objects.filter(email=form.cleaned_data["email"]).exists():
                 form.add_error("email",tran.gettext("Duplicate email has found"))
                 return render(request, Words.reg_url, {"form": form})
+            # let one person create an account only five times in a day
+            ip = get_client_ip(request)
+            if services.enable_five_accounts and ip is not None and ip not in settings.LOCAL_IPS:
+                ip_count = User.objects.filter(date_joined__date=datetime.now().date(),userinfo__ip_address=ip).count()
+                if ip_count>5:
+                    form.add_error("email",tran.gettext("You cannot create multiple accounts"))
+                    return render(request, Words.reg_url, {"form": form})
 
             user = User.objects.create_user(form.cleaned_data["email"], form.cleaned_data["email"], form.cleaned_data["password"])
             user.first_name = form.cleaned_data["first_name"]
             user.last_name = form.cleaned_data["last_name"]
             user.save()
+            user.userinfo_set.create(ip_address=ip)
 
             return redirect("/login",permanent=True)
         else:
