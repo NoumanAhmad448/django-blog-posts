@@ -14,3 +14,7 @@ __pycache__
 auths/models/__pycache__
 blogs/models/__pycache__
 api_v1/models/__pycache__
+
+auths/admin/__pycache__
+blogs/admin/__pycache__
+api_v1/admin/__pycache__
