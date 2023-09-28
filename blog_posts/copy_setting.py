@@ -254,5 +254,6 @@ AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.ModelBackend"]
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_DOMAIN='localhost:8080'
+CSRF_TRUSTED_ORIGINS=json.loads(env.get("ALLOWED_CSRF_HOSTS"))
 
 LOCAL_IPS=json.loads(env.get("LOCAL_IPS"))
