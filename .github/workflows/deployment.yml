@@ -75,8 +75,6 @@ jobs:
           flake8_auto_fix: false
           stylelint: true
           stylelint_dir: /assets/css
-          ESLint: true
-          ESLint_dir: /assets/js
           Prettier: true
 
 
