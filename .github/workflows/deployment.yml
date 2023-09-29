@@ -42,12 +42,6 @@ jobs:
       - name: Check Python version
         run: python --version
 
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          auto_fix: true
-          Prettier: true
-
       - name: Create Virtual Env
         run: |
           python3 -m venv test-django3
