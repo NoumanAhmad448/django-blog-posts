@@ -1,3 +1,5 @@
 settings.py
 .env
+.env.live
 uvicorn.log
+live.settings.py
