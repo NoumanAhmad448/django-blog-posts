@@ -40,6 +40,13 @@ api_v1/forms/__pycache__
 blogs/forms/__pycache__
 api_v1/forms/__pycache__
 
+api_v1/tests/__pycache__
+blogs/test/__pycache__
+api_v1/tests/__pycache__
+
 blog_posts/__pycache__
 
 middlewares/__pycache__
+
+auths/management/__pycache__
+auths/management/commands/__pycache__
