@@ -66,6 +66,20 @@ jobs:
     needs: ['testing']
     steps:
       - uses: actions/checkout@v3
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          auto_fix: true
+          black: true
+          flake8: true
+          flake8_auto_fix: false
+          stylelint: true
+          stylelint_dir: /assets/css
+          ESLint: true
+          ESLint_dir: /assets/js
+          Prettier: true
+
+
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
