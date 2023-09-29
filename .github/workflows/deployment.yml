@@ -42,6 +42,12 @@ jobs:
       - name: Check Python version
         run: python --version
 
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          auto_fix: true
+          Prettier: true
+
       - name: Create Virtual Env
         run: |
           python3 -m venv test-django3
@@ -66,17 +72,6 @@ jobs:
     needs: ['testing']
     steps:
       - uses: actions/checkout@v3
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
-        with:
-          auto_fix: true
-          black: true
-          flake8: true
-          flake8_auto_fix: false
-          stylelint: true
-          stylelint_dir: /assets/css
-          Prettier: true
-
 
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
