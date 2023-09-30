@@ -1,4 +1,8 @@
 We need to setup the environment first. I am using ```Centos 7```
+### Please make sure to create following files on server before auto deployment
+1. .env
+2. settings.py
+3. server_deploy.sh
 
 1. install python
     1. run
@@ -324,3 +328,7 @@ Click the "csf" tab.
     1. Go to SSL/TLS and create key and crt
     2. save it in /etc/ssl/certs
     3. Go to nginx configuration stated above in ssl_certificate and update it
+
+3. Enable Auto SSL
+    1. Go to ```SSL/TLS Status```
+    2. choose domain and select ```Run Auto SSL```

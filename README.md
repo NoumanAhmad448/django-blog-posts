@@ -43,8 +43,9 @@ python manage.py migrate
  ```
 
 # Auto Deployment using Github Actions
-1. you may refer to deployment.yml file in github Action for deployment
+1. you may refer to [deployment.yml](/.github/workflows/deployment.yml) file in github Action for deployment
 2. refer to [deployment_using_uwsgi](/deployment_using_uwsgi.md) for deploying using uwsgi
+3. refer to [deployment using gunicorn](/deployment.md) for deploying using gunicorn
 
 # Dockering Version
 1. run command
