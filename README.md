@@ -134,3 +134,5 @@ GRANT ALL PRIVILEGES ON * . * TO 'root2'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+## Amazon Deployment
+You can open [this](http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/) to check deployment on Amazon Elastic Beanstalk. For source code, Please [open me](https://github.com/NoumanAhmad448/web_django/tree/master/app)
