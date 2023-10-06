@@ -180,6 +180,8 @@ We need to setup the environment first. I am using ```Centos 7```
         RuntimeDirectory=mysite
         WorkingDirectory= cd /home/usmansaleem234/public_html/test-django/mysite/mysite #project directory path that does not include                     # manage.py
         ExecStart=/opt/python-venv/test-django3/bin/gunicorn -b 0.0.0.0:8080 blog_posts.wsgi:application
+        # add following to ExecStart gunicorn command in ubuntu and comment working directory
+        ## --chdir /home/telessaude/telessaude_branch_master
         # fetch gunicorn path using whereis gunicorn
         ExecReload=/bin/kill -s HUP $MAINPID
         KillMode=mixed
