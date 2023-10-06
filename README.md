@@ -137,3 +137,13 @@ FLUSH PRIVILEGES;
 
 ## Amazon Deployment
 You can open [this](http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/) to check deployment on Amazon Elastic Beanstalk. For source code, Please [open me](https://github.com/NoumanAhmad448/web_django/tree/master/app)
+
+
+## Website Links
+1. https://django.lyskills.com
+2. https://test-django.lyskills.com
+3. https://fastapi.lyskills.com
+4. https://flask.lyskills.com
+5. https://ec2-user-django.lyskills.com
+6. http://dev-web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com
+7. http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/
