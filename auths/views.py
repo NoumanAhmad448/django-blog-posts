@@ -22,14 +22,16 @@ from sys import exit
 from funs.funs import get_client_ip
 from datetime import datetime
 import services
+from funs.funs import get_current_lang
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
 def register_user(request):
+    lang = get_current_lang(request)
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect("/", permanent=True)
-        return render(request, Words.reg_url)
+        return render(request, Words.reg_url,{"lang": lang})
 
     elif request.method == 'POST':
         form = RegisterationForm(request.POST)
@@ -37,14 +39,14 @@ def register_user(request):
             # duplicate email validation
             if User.objects.filter(email=form.cleaned_data["email"]).exists():
                 form.add_error("email",tran.gettext("Duplicate email has found"))
-                return render(request, Words.reg_url, {"form": form})
+                return render(request, Words.reg_url, {"form": form,"lang": lang})
             # let one person create an account only five times in a day
             ip = get_client_ip(request)
             if services.enable_five_accounts and ip is not None and ip not in settings.LOCAL_IPS:
                 ip_count = User.objects.filter(date_joined__date=datetime.now().date(),userinfo__ip_address=ip).count()
                 if ip_count>5:
                     form.add_error("email",tran.gettext("You cannot create multiple accounts"))
-                    return render(request, Words.reg_url, {"form": form})
+                    return render(request, Words.reg_url, {"form": form,"lang": lang})
 
             user = User.objects.create_user(form.cleaned_data["email"], form.cleaned_data["email"], form.cleaned_data["password"])
             user.first_name = form.cleaned_data["first_name"]
@@ -54,7 +56,7 @@ def register_user(request):
 
             return redirect("/login",permanent=True)
         else:
-            return render(request, Words.reg_url, {"form": form})
+            return render(request, Words.reg_url, {"form": form,"lang": lang})
 
 
 def current_posts(request):
@@ -64,16 +66,18 @@ def current_posts(request):
 
     page_number = request.GET.get("page")
     posts = paginator.get_page(page_number)
-    return render(request, Words.index_url, {"posts": posts})
+    lang = get_current_lang(request)
+    return render(request, Words.index_url, {"posts": posts,"lang": lang})
 
 
 @api_view(["GET","POST"])
 @permission_classes((permissions.AllowAny,))
 def login_user(request):
+    lang = get_current_lang(request)
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect("/", permanent=True)
-        return render(request, Words.login_url)
+        return render(request, Words.login_url,{"lang":lang})
     elif request.method == 'POST':
             form = LoginForm(request.POST)
             if form.is_valid():
@@ -83,9 +87,9 @@ def login_user(request):
                     return redirect("/",permanent=True)
                 else:
                    form.add_error("email", tran.gettext("Either email or password is wrong"))
-                   return render(request, Words.login_url, {"form": form})
+                   return render(request, Words.login_url, {"form": form,"lang": lang})
             else:
-                return render(request, Words.login_url, {"form": form})
+                return render(request, Words.login_url, {"form": form,"lang": lang})
 
 @login_required
 def logout_user(request):
@@ -95,11 +99,12 @@ def logout_user(request):
 
 @login_required
 def forgot_password(request):
+    lang = get_current_lang(request)
     if request.method == 'GET':
         user = request.user
         password_history = PasswordHistory.objects.filter(user_id=user.id).order_by("-created_at")
         password_history = password_history[0] if password_history and password_history.exists() else None
-        return render(request, Words.update_pass_url, {"password_history": password_history})
+        return render(request, Words.update_pass_url, {"password_history": password_history,"lang": lang})
 
     elif request.method == 'POST':
         form = UpdatePassForm(request.POST)
@@ -119,7 +124,8 @@ def forgot_password(request):
                                                         {
                             'username': f"{user.first_name} {user.last_name}",
                             'website_url': settings.ALLOWED_HOSTS[0],
-                            'website_name': settings.WEBISTE_NAME
+                            'website_name': settings.WEBISTE_NAME,
+                            "lang": lang
                                                         }
                                                         )
                         send_mail(subject="PASSWORD HAS BEEN CHANGED", recipient_list=[user.email],
@@ -127,12 +133,12 @@ def forgot_password(request):
                                   message=strip_tags(html_content))
                     return redirect("/",permanent=True)
                 else:
-                    return render(request, Words.update_pass_url, {"form": form})
+                    return render(request, Words.update_pass_url, {"form": form,"lang": lang})
             else:
                 form.add_error("password", tran.gettext("Both passwords are not same"))
-                return render(request, Words.update_pass_url, {"form": form})
+                return render(request, Words.update_pass_url, {"form": form,"lang": lang})
         else:
-            return render(request, Words.update_pass_url, {"form": form})
+            return render(request, Words.update_pass_url, {"form": form,"lang": lang})
 
 
 from .tasks import add

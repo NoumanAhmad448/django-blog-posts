@@ -7,7 +7,7 @@ class LanguageTransMiddleware:
     def __call__(self, request):
         LANGUAGE_CODE = 'en'
         get_req = request.GET.copy()
-        lang = get_req.get('lang')
+        lang = get_req.get('lang', None)
         language = lang if lang is not None else LANGUAGE_CODE
         get_req['lang'] = language
         tran.activate(language)

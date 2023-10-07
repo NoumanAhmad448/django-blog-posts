@@ -16,6 +16,8 @@ from django.views.decorators.cache import cache_page
 from dotenv import load_dotenv
 import os
 from django.contrib import messages
+from funs.funs import get_current_lang
+from django.conf import settings
 
 load_dotenv()
 
@@ -28,6 +30,7 @@ REDIS_TIMEOUT= int(60*30 if env.get("REDIS_TIMEOUT") is None else env.get("REDIS
 @login_required(login_url="/login")
 @cache_page(REDIS_TIMEOUT)
 def create_post(request):
+    lang = get_current_lang(request)
     post_model = CreatePostModel()
     if request.method == 'GET':
         data = {}
@@ -38,7 +41,7 @@ def create_post(request):
         if request.GET.get("post_id") is not None:
             data = get_object_or_404(CreatePostModel.objects.filter(id=request.GET.get("post_id")).
                                      values(post_model.ID,post_model.TITLE, post_model.DESCRIP,post_model.TAGS))
-        return render(request,Words.create_post_url, {"data": data, "errors": errors})
+        return render(request,Words.create_post_url, {"data": data, "errors": errors, "lang": lang})
 
     elif request.method == 'POST':
         response = create_post_api(request)
@@ -50,13 +53,13 @@ def create_post(request):
             if False:
                 return redirect(reverse("current_post", args=(response[api_response.DATA]["post_id"],)))
             else:
-                return redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip(),
+                return redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip()+f"&lang={lang}",
                                 {"data" : response[api_response.DATA]})
 
         else:
             if "id" in response[api_response.DATA] and response[api_response.DATA]["id"] is not None:
                 request.session["errors"] = response[api_response.MESSAGE]
-                return  redirect(reverse("blog:create-post")+"?post_id="+str(response[api_response.DATA]["id"]).strip())
+                return  redirect(reverse("blog:create-post")+"?+lang={lang}&post_id="+str(response[api_response.DATA]["id"]).strip())
             else:
                 return render(request, Words.create_post_url, {"errors": response[api_response.MESSAGE]})
 
@@ -64,25 +67,30 @@ def create_post(request):
 
 @permission_classes((permissions.AllowAny,))
 def current_post(request, post_id):
+    lang = get_current_lang(request)
     post = get_object_or_404(CreatePostModel,id=post_id)
     user = request.user
     is_post_bookmarked = False
     if user is not None:
         is_post_bookmarked = BookmarkPostModel.objects.filter(post=post.id,user=user.id).exists()
     return render(request,Words.index_url, {"post" : post,
-                                            "is_post_bookmarked": is_post_bookmarked})
+                                            "is_post_bookmarked": is_post_bookmarked,"lang":lang})
 
-@login_required(login_url="/login")
+
 @cache_page(REDIS_TIMEOUT)
+@login_required(login_url="/login")
 def show_posts(request):
+    lang = get_current_lang(request)
+
     posts = CreatePostModel.objects.filter(user_id=request.user.id).order_by("-created_at")
-    return render(request, Words.show_posts_url, {"posts": posts})
+    return render(request, Words.show_posts_url, {"posts": posts, "lang": lang})
 
 @login_required(login_url="/login")
 def bookmark_post(request):
+    lang = get_current_lang(request)
     if request.method == 'GET':
         bookmark_posts = BookmarkPostModel.objects.filter(user=request.user.id)
-        return render(request, Words.bookmark_posts_url, {"bookmark_posts": bookmark_posts})
+        return render(request, Words.bookmark_posts_url, {"bookmark_posts": bookmark_posts, "lang": lang})
 
     if request.method == 'POST':
         post_id = request.POST["post_id"]
@@ -101,13 +109,14 @@ def bookmark_post(request):
             bookmark_post.save()
         else:
             bookmark_post.update()
-        return redirect(reverse("blog:bookmark_post"))
+        return redirect(reverse("blog:bookmark_post")+f"?lang={lang}")
 
 @login_required(login_url="/login")
 def unbookmark_post(request):
+    lang = get_current_lang(request)
     if request.method == 'POST':
         post_id = request.POST["post_id"]
         print(post_id)
         post = get_object_or_404(CreatePostModel.objects.filter(id=post_id))
         BookmarkPostModel.objects.filter(user=request.user.id,post=post.id).delete()
-        return redirect(reverse("blog:current_post", kwargs={"post_id":post.id}))
+        return redirect(reverse("blog:current_post", kwargs={"post_id":post.id})+f"?lang={lang}")
