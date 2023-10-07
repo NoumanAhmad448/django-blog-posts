@@ -8,14 +8,14 @@
         <hr>
         <div class="row">
     {% for post in bookmark_posts %}
-    <div class="col-4 pt-2">
+    <div class="col-md-4 pt-2">
         <div class="card" style="width: 18rem;">
             <div class="card-body" style="height: 300px;">
                 <h5 class="card-title text-uppercase">{{ post.post.title | slice:":20" }} </h5>
                 <p class="card-text">{{ post.post.descrip | slice:":100" }}</p>
             </div>
             <div class="card-footer">
-                <a href="{% url 'blog:current_post' post_id=post.post.id %}" class="btn btn-primary btn_rounded"> {% translate "Read More" %}</a>
+                <a href="{% url 'blog:current_post' post_id=post.post.id %}?lang={{lang}}" class="btn btn-primary btn_rounded"> {% translate "Read More" %}</a>
             </div>
         </div>
     </div>

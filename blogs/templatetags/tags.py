@@ -16,3 +16,8 @@ def split(value,args):
 @register.simple_tag
 def define(val=None):
   return val
+
+@register.simple_tag
+def current_url(request):
+  return request.path
+

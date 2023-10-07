@@ -50,3 +50,6 @@ middlewares/__pycache__
 
 auths/management/__pycache__
 auths/management/commands/__pycache__
+
+
+django-blog-posts/*

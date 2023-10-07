@@ -3,7 +3,7 @@ from . import views
 from django.contrib.flatpages import views as flat_view
 
 urlpatterns = [
-    path('', views.current_posts, name="latest_posts"),
+    path("", views.current_posts, name="latest_posts"),
     path("register", views.register_user, name="register_user"),
     path("login", views.login_user, name="login_user"),
     path("logout", views.logout_user, name="logout"),

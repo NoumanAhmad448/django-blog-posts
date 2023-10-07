@@ -1,7 +1,9 @@
 {% load i18n %}
 {% load static %}
+{% load tags %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex d-flex-between justify-content-between">
-    <a class="navbar-brand" href="{% url 'latest_posts' %}"> {% translate 'Blog Posts' %}</a>
+    <a class="navbar-brand" href="{% url 'latest_posts' %}?lang={{lang}}"> {% translate 'Blog Posts' %}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,9 +11,13 @@
     <div class="div-inline my-2 my-lg-0">
         {% url 'register_user' as register_user %}
         {% if user.is_authenticated %}
-        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'logout' %}">{% translate "Logout" %}</a>
-            <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="{% url 'blog:create-post' %}">
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'logout' %}?lang={{lang}}">{% translate "Logout" %}</a>
+            <a class="btn btn-outline-primary my-2 my-sm-0" type="button" href="{% url 'blog:create-post' %}?lang={{lang}}">
                 {% translate "Create Post" %}
+            </a>
+            <a class="btn btn-outline-primary my-2 my-sm-0" type="button"
+            href="{{ request.path }}?lang={% if lang == 'en' %}{{'zh'}}{% else %}{{'en'}}{% endif %} ">
+                {% translate "Change Language" %}
             </a>
         <div class="btn-group">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -19,24 +25,24 @@
                 {{ user.first_name }}
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-                <button class="dropdown-item" type="button"><a href="{% url 'update_password' %}">
+                <button class="dropdown-item" type="button"><a href="{% url 'update_password' %}?lang={{lang}}">
                     {% translate "Update Password" %} </a>
                 </button>
-                    <button class="dropdown-item" type="button"><a href="{% url 'blog:create-post' %}">
+                    <button class="dropdown-item" type="button"><a href="{% url 'blog:create-post' %}?lang={{lang}}">
                         {% translate "Create Post" %} </a>
                     </button>
-                <button class="dropdown-item" type="button"><a href="{% url 'blog:show_posts' %}">
+                <button class="dropdown-item" type="button"><a href="{% url 'blog:show_posts' %}?lang={{lang}}">
                     {% translate "My Posts" %} </a>
                 </button>
-                <button class="dropdown-item" type="button"><a href="{% url 'blog:bookmark_post' %}">
+                <button class="dropdown-item" type="button"><a href="{% url 'blog:bookmark_post' %}?lang={{lang}}">
                     {% translate "Bookmarked Posts" %} </a>
                 </button>
             </div>
         </div>
         {% elif request.path == register_user %}
-        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'login_user' %}">{% translate "Login" %}</a>
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'login_user' %}?lang={{lang}}">{% translate "Login" %}</a>
         {% else %}
-        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'register_user' %}">{% translate "Register" %}</a>
+        <a class="btn btn-outline-primary my-2 my-sm-0" href="{% url 'register_user' %}?lang={{lang}}">{% translate "Register" %}</a>
         {% endif %}
     </div>
 </nav>

@@ -5,14 +5,14 @@
 <div class="container mt-5">
     <div class="row">
         {% for post in posts %}
-        <div class="col-4 pt-2">
+        <div class="col-md-4 pt-2">
             <div class="card" style="width: 18rem;">
                 <div class="card-body" style="height: 300px;">
                     <h5 class="card-title text-uppercase">{{ post.title | slice:":20" }} </h5>
                     <p class="card-text">{{ post.descrip | slice:":100" }}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'blog:current_post' post_id=post.id %}" class="btn btn-primary btn_rounded">
+                    <a href="{% url 'blog:current_post' post_id=post.id %}?lang={{lang}}" class="btn btn-primary btn_rounded">
                         {% translate "Read More" %}
                     </a>
                 </div>
@@ -21,11 +21,11 @@
         {% endfor %}
     </div>
 </div>
-<div class="pagination">
+<div class="pagination m-5">
     <span class="step-links">
         {% if posts.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ posts.previous_page_number }}">previous</a>
+            <a href="?page=1&lang={{lang}}">&laquo; first</a>
+            <a href="?page={{ posts.previous_page_number }}?lang={{lang}}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -33,12 +33,14 @@
         </span>
 
         {% if posts.has_next %}
-        <a href="?page={{ posts.next_page_number }}">next</a>
-        <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+        <a href="?page={{ posts.next_page_number }}&lang={{lang}}">next</a>
+        <a href="?page={{ posts.paginator.num_pages }}&lang={{lang}}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
 {%else %}
-no post is available
+<div class="text-center text-bold my-5 text-primary" style="font-size: 3rem;">
+    No post is available
+</div>
 {% endif %}
 {% endblock %}
