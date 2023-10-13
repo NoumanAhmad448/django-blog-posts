@@ -147,3 +147,4 @@ You can open [this](http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.co
 5. https://ec2-user-django.lyskills.com
 6. http://dev-web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com
 7. http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/
+8. https://nextjs.lyskills.com
