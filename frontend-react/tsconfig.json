@@ -21,7 +21,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/navbar.jsx", "pages/index.js"  ],
+, "pages/navbar.jsx", "pages/index.tsx"  ],
   "exclude": [
     "node_modules"
   ]
