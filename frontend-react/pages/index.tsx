@@ -2,7 +2,6 @@ import Layout from "./layouts"
 import Head from 'next/head'
 import Script from 'next/script'
 import type { ReactElement}  from 'react'
-import {Button} from "./components/comp"
 import { useRouter } from "next/router"
 import type { InferGetServerSidePropsType,GetServerSideProps} from 'next'
 import { useState, useEffect } from 'react'
