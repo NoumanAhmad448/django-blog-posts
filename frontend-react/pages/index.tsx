@@ -75,7 +75,6 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
         })
       }
       </div>
-
       </>
     )
   }else{
@@ -85,7 +84,7 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
 
 Home.getLayout = function getLayout(page: ReactElement) {
   return (
-    <Layout data>
+    <Layout>
       {page}
     </Layout>
   )

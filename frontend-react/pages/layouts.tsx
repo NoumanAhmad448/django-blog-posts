@@ -9,7 +9,7 @@ const DynamicFooter = dynamic(() => import('./components/footer').then((footer) 
     loading: () => <p>Loading...</p>,
 })
 
-function Layout({ children,data}) {
+function Layout({ children}) {
     return (
         <>
         <DynamicNav />
