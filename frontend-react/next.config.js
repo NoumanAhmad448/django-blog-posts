@@ -28,6 +28,7 @@ module.exports = {
             pathname: '/my-bucket/**',
           },
         ],
-        domains: ["nextjs.lyskills.com"]
+        domains: ["nextjs.lyskills.com"],
+        minimumCacheTTL: 60,
     },
 }

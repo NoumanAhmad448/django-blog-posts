@@ -7,6 +7,8 @@ import type { InferGetServerSidePropsType,GetServerSideProps} from 'next'
 import { useState, useEffect } from 'react'
 import api_urls from "../api_urls"
 import moment from 'moment';
+import Script from 'next/script'
+
 
 type Repo = {
   is_success: boolean,
@@ -31,16 +33,16 @@ type PostRecord = {
 }
 
 export const getServerSideProps = (async () => {
+  const logger = require("pino")()
+
   let post_url: string = `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_API_ROUTE}/${api_urls.url_get_posts}`
-  if(process.env.Debug){
-    console.log(post_url)
-  }
+
+  logger.info(post_url)
 
   const resp = await fetch(post_url)
-  if(process.env.Debug){
-    console.log(resp)
-  }
   const repo = await resp.json()
+  logger.info(`response from ${post_url}`)
+  logger.info(repo.is_success)
 
   return { props: { repo } }
   }) satisfies GetServerSideProps<{
@@ -62,6 +64,10 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
     return (
       <>
         {resp_header}
+        <Script
+          src="js/index.tsx"
+          strategy="afterInteractive"
+        />
         <section className="hero container max-w-screen-lg mx-auto py-10">
           <Image src="vercel.svg" alt="svg" width={600} height={600} className="mx-auto"/>
         </section>
