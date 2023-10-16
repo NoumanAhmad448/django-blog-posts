@@ -58,3 +58,5 @@ auths/management/commands/__pycache__
 
 
 django-blog-posts/*
+
+**/__pycache__/**
