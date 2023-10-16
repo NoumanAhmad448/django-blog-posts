@@ -68,6 +68,9 @@ For reference check [DockerFile](/Dockerfile) and [docker-compose.yml](/docker-c
 ## Information
 1. super user credentials: username: test_user  password:test_user
 
+## Next JS frontend
+You can refer to [this path for next js](/frontend-react/)
+Last but not least, don't forget to [our website](https://nextjs.lyskills.com)
 ## Technical Knowledge
 1. custom middleware has been created for language translation ```middlewares.LanguageTransMiddleware```
 2. django session and token validation has been implemented
@@ -147,3 +150,4 @@ You can open [this](http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.co
 5. https://ec2-user-django.lyskills.com
 6. http://dev-web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com
 7. http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/
+8. https://nextjs.lyskills.com
