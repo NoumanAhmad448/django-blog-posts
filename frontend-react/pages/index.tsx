@@ -11,7 +11,15 @@ import moment from 'moment';
 type Repo = {
   is_success: boolean,
   message: string,
-  debug: object
+  debug: object,
+  data: {
+    title: string,
+    descrip: string,
+    id: number,
+    tags: string,
+    created_at: string,
+    should_display: boolean
+  }
 }
 
 type PostRecord = {
