@@ -6,6 +6,11 @@ import { Roboto } from 'next/font/google'
 import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
 
+export async function getStaticProps() {
+  let sslRootCAs = require('ssl-root-cas/latest')
+  sslRootCAs.inject()
+}
+
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
