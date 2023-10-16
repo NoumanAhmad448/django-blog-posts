@@ -1,15 +1,6 @@
 import { useRouter } from 'next/router'
 
-export function getAllPostIds() {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.map((fileName) => {
-    return {
-      params: {
-        id: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
-}
+
 export async function getServerSideProps(context) {
   return {
     props: {
@@ -21,7 +12,9 @@ export async function getServerSideProps(context) {
 
 const Home = ({ data }) => {
   const router = useRouter()
-  console.log(data)
+  if(process.env.DEBUG){
+    console.log(data)
+  }
   return (
     <section>
       <div> Given post id {router.query.id} </div>

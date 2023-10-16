@@ -1,6 +1,6 @@
 import Layout from "./layouts"
 import Head from 'next/head'
-import Script from 'next/script'
+import Image from 'next/image'
 import type { ReactElement}  from 'react'
 import { useRouter } from "next/router"
 import type { InferGetServerSidePropsType,GetServerSideProps} from 'next'
@@ -62,6 +62,10 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
     return (
       <>
         {resp_header}
+        <section className="hero container max-w-screen-lg mx-auto py-10">
+          <Image src="vercel.svg" alt="svg" width={600} height={600} className="mx-auto"/>
+        </section>
+
         <div className="md:grid md:grid-cols-4 border-t">
         {
         repo = repo.data.map((data: PostRecord)=> {

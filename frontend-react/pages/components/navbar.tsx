@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
+const router = useRouter()
 return (
   <ul className="flex p-5 border-b">
     <li className="mr-3">
