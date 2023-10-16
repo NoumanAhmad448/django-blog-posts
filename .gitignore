@@ -31,6 +31,10 @@ auths/migrations/__pycache__
 blogs/migrations/__pycache__
 api_v1/migrations/__pycache__
 
+auths/forms/__pycache__
+blogs/forms/__pycache__
+api_v1/forms/__pycache__
+
 keywords/__pycache__
 blogs/keywords/__pycache__
 
