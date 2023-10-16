@@ -23,9 +23,13 @@ pm2 list
 ```
 run next service in the background
 ```
-pm2 start "npm start"
+pm2 start "npm start" -n nextjs.lyskills.com
 ```
 ```
 pm2 stop     <app_name|namespace|id|'all'|json_conf>
 pm2 delete   <app_name|namespace|id|'all'|json_conf>
+```
+pm2 logs
+```
+pm2 logs -n nextjs.lyskills.com
 ```
