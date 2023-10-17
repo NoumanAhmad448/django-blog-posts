@@ -31,7 +31,6 @@ module.exports = {
         //   },
         // ],
         domains: ["nextjs.lyskills.com","tailwindui.com"],
-        minimumCacheTTL: 60,
     },
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],

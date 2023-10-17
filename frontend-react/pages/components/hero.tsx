@@ -25,7 +25,7 @@ const Hero = ({navigation}) =>  {
               <span className="sr-only">Your Company</span>
               <Image
                 className="h-8 w-auto"
-                src="../../images/mark.svg"
+                src="images/mark.svg"
                 alt="website logo"
                 width={50}
                 height={50}
@@ -76,7 +76,7 @@ const Hero = ({navigation}) =>  {
                 <Image
                 //   loader={myLoader}
                   className="h-8 w-auto"
-                  src="../../images/mark.svg"
+                  src="images/mark.svg"
                   alt="website logo"
                 />
               </a>
