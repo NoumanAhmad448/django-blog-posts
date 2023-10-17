@@ -1,0 +1,16 @@
+@use "variables"
+@import "mixins"
+
+variables.$bg-color: if(variables.$should-change-bg,#f0f,variables.$bg-color)
+
+.error
+  border: 1px #f00 !important
+  background-color: #fdd !important
+
+
+.change
+    background-color: variables.$bg-color !important
+    @include prefix(background-color, green, moz webkit)
+
+    &:hover
+        @extend .error

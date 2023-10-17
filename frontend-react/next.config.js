@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
     webpack(config) {
       config.infrastructureLogging = { debug: /PackFileCache/ }
@@ -20,15 +22,18 @@ module.exports = {
         localeDetection: false,
     },
     images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: 'nextjs.lyskills.com',
-            port: '',
-            pathname: '/my-bucket/**',
-          },
-        ],
-        domains: ["nextjs.lyskills.com"],
+        // remotePatterns: [
+        //   {
+        //     protocol: 'https',
+        //     hostname: 'nextjs.lyskills.com',
+        //     port: '',
+        //     pathname: '/my-bucket/**',
+        //   },
+        // ],
+        domains: ["nextjs.lyskills.com","tailwindui.com"],
         minimumCacheTTL: 60,
+    },
+    sassOptions: {
+        includePaths: [path.join(__dirname, 'styles')],
     },
 }

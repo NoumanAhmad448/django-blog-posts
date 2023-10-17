@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react'
 import api_urls from "../api_urls"
 import moment from 'moment';
 import Script from 'next/script'
+import Hero  from "./components/hero"
+
 
 
 type Repo = {
@@ -49,7 +51,12 @@ export const getServerSideProps = (async () => {
     repo: Repo
   }>
 
-
+const navigation = [
+    { name: 'Product', href: '#' },
+    { name: 'Features', href: '#' },
+    { name: 'Marketplace', href: '#' },
+    { name: 'Company', href: '#' },
+]
 const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
@@ -68,15 +75,12 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
           src="js/index.tsx"
           strategy="afterInteractive"
         />
-        <section className="hero container max-w-screen-lg mx-auto py-10">
-          <Image src="vercel.svg" alt="svg" width={600} height={600} className="mx-auto"/>
-        </section>
-
+        <Hero navigation={navigation}/>
         <div className="md:grid md:grid-cols-4 border-t">
         {
-        repo = repo.data.map((data: PostRecord)=> {
+        repo = repo.data.map((data: PostRecord, index: number)=> {
             return (
-              <div key="{data.id}" className="md:max-w-md rounded overflow-hidden shadow-lg py-3">
+              <div key={index} className="md:max-w-md rounded overflow-hidden shadow-lg py-3">
               <div className=" px-6 py-4 h-80">
                 <div className="font-bold text-xl mb-2 uppercase">{data.title}</div>
                   <p className="text-gray-700 text-base">
@@ -84,7 +88,8 @@ const Home = ({ repo }:InferGetServerSidePropsType<typeof getServerSideProps>) =
                   </p>
               </div>
               <div className="px-6 pt-4 pb-2">
-              {data.tags && data.tags.split(",").map((content: string) => {return <span key={content.length} className="capitalize inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{content}</span>})}
+              {data.tags && data.tags.split(",").map((content: string, index: number) => {return <span
+              key={index} className="capitalize inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{content}</span>})}
               </div>
               <div className="text-center mr-2 bg-gray-200 rounded-full p-2 mt-4 mb-3">Created at: {moment(data.created_at).toDate().toLocaleDateString()}</div>
               </div>
