@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from 'next/image'
 import type from "react"
+import myLoader from "../funs";
 
 // type Navigation = { name: string; href: string };
 
@@ -24,7 +25,7 @@ const Hero = ({navigation}) =>  {
               <span className="sr-only">Your Company</span>
               <Image
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="../../images/mark.svg"
                 alt="website logo"
                 width={50}
                 height={50}
@@ -73,8 +74,9 @@ const Hero = ({navigation}) =>  {
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <Image
+                //   loader={myLoader}
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  src="../../images/mark.svg"
                   alt="website logo"
                 />
               </a>
