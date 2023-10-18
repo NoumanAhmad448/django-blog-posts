@@ -51,7 +51,7 @@ export const getServerSideProps = (async () => {
     repo: Repo
   }>
 
-const navigation = [
+const navigation: Array<{ name: string, href: string }> = [
     { name: 'Product', href: '#' },
     { name: 'Features', href: '#' },
     { name: 'Marketplace', href: '#' },

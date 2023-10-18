@@ -6,6 +6,9 @@ import type { ReactElement, ReactNode } from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { NextRequest, NextResponse } from 'next/server'
+import {useState,useEffect} from 'react'
+import { Router } from 'next/router'
+import Image from 'next/image'
 
 
 const roboto = Roboto({
@@ -44,14 +47,54 @@ export const getS = async ({ req }) => {
 }
 
 
+
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page)
-
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if(process.env.DEBUG){
+      console.log(" I have b  een called")
+    }
+    const start = () => {
+      if(process.env.DEBUG){
+        console.log("hello world -> start");
+      }
+      setLoading(true);
+    };
+    const end = () => {
+      if(process.env.DEBUG){
+        console.log("finished");
+      }
+      setTimeout(() => {
+        if(process.env.DEBUG){
+          console.log('3 sec pause')
+        }
+      }, 3000);
+      setLoading(false);
+    };
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+  }, []);
   return getLayout(
     <>
+      {loading ?(
+        <section className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-36 bg-white rounded rounded-full">
+          <div className="sm:mb-8 sm:flex sm:justify-center">
+            <Image src="/images/loader.gif" alt="loader" width={300} height={300}/>
+          </div>
+        </section>
+      )
+        :
       <main className={roboto.className}>
         <Component {...pageProps} />
       </main>
+    }
     </>
   )
 }

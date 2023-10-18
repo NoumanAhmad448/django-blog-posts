@@ -5,9 +5,6 @@ import Image from 'next/image'
 import type from "react"
 import myLoader from "../funs";
 
-// type Navigation = { name: string; href: string };
-
-// navigation: [Navigation]
 const Hero = ({navigation}) =>  {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
