@@ -1,5 +1,5 @@
 # Blog Posts Project
-### An app that can create blogs. The main purpose to create this app to practice django skills and make the source code available online for other developers to start this repo for their own custom need
+> ### An app that can create blogs. The main purpose to create this app to practice django skills and make the source code available online for other developers to start this repo for their own custom need
 Using this app, you can
 1. create an account, update the user password, login to the website
 2. fetch the user detail using API
@@ -8,6 +8,8 @@ Using this app, you can
 5. create, update a post. Every post require admin approval
 6. every post can be bookmark/unbookmark on user request
 7. On updating the password, system will fire an email to the related user. You need to make sure all the settings are properly setup in settings.py and .env files. If you want to skip sending the email, make sure to set EMAIL_HOST_EXIST as None. No further changes are required.
+
+<hr/>
 
 ![Alt home page](md_images/01.png "Home Page")
 ![Alt reg page](md_images/02.png "Registeration Page")
@@ -142,7 +144,7 @@ FLUSH PRIVILEGES;
 You can open [this](http://web-django.eba-ch3dwa3n.us-east-1.elasticbeanstalk.com/) to check deployment on Amazon Elastic Beanstalk. For source code, Please [open me](https://github.com/NoumanAhmad448/web_django/tree/master/app)
 
 
-## Website Links
+> ## Website Links
 1. https://django.lyskills.com
 2. https://test-django.lyskills.com
 3. https://fastapi.lyskills.com
